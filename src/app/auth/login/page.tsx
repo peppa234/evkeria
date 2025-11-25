@@ -1,66 +1,37 @@
-"use client";
-
-import { useState } from "react";
-import Link from "next/link";
-import { Button } from "@components/ui/button";
+import Image from "next/image"
+import { LoginForm } from "./LoginForm"
+import { Navbar } from "@components/Navbar/Navbar"
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
-
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center pt-40 pb-20">
-      <div className="max-w-md w-full px-8">
-        <h1 className="font-outfit font-semibold text-[#1e4e79] text-4xl text-center mb-8">
-          Login
-        </h1>
+    <div className="min-h-screen bg-gradient-to-br from-[#0f2744] via-[#1a3a5c] to-[#0d2137] relative">
+      
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block font-outfit font-medium text-[#1e4e79] mb-2">
-              Email
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#4fa3e3] font-outfit"
-              required
-            />
+      <main className="container mx-auto px-4 pt-32 pb-12 lg:pt-40 lg:pb-16">
+        {/* Glassmorphic Card Container */}
+        <div className="max-w-5xl mx-auto bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 lg:p-8">
+          <div className="flex flex-col lg:flex-row items-center gap-8">
+            {/* Left Side - Image */}
+            <div className="flex-1 flex justify-center lg:justify-start">
+              <div className="relative w-full max-w-md lg:max-w-lg">
+                <Image
+                  src="/user_photo.png"
+                  alt="Person using mobile phone"
+                  width={500}
+                  height={600}
+                  className="object-contain"
+                  priority
+                />
+              </div>
+            </div>
+
+            {/* Right Side - Login Form */}
+            <div className="flex-1 w-full flex justify-center lg:justify-end">
+              <LoginForm />
+            </div>
           </div>
-
-          <div>
-            <label className="block font-outfit font-medium text-[#1e4e79] mb-2">
-              Password
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#4fa3e3] font-outfit"
-              required
-            />
-          </div>
-
-          <Button
-            type="submit"
-            className="w-full h-12 bg-gradient-to-r from-[#4fa3e3] to-[#6fb3e6] font-outfit font-medium text-white"
-          >
-            Login
-          </Button>
-        </form>
-
-        <p className="mt-6 text-center font-outfit text-[#1e4e79]">
-          Don't have an account?{" "}
-          <Link href="/auth/signup" className="text-[#4fa3e3] hover:underline">
-            Sign up
-          </Link>
-        </p>
-      </div>
+        </div>
+      </main>
     </div>
-  );
+  )
 }

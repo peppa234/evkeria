@@ -1,7 +1,9 @@
+
 import type { Metadata } from "next";
-import { Navbar } from "@components/Navbar/Navbar";
-import { Footer } from "@components/Footer/Footer";
+
 import "@styles/globals.css";
+import { ConditionalLayout } from "@components/ConditionalLayout";
+
 
 export const metadata: Metadata = {
   title: "Evkeria - Discover, Network & Innovate",
@@ -16,11 +18,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <ConditionalLayout>{children}</ConditionalLayout>
       </body>
     </html>
   );
 }
-

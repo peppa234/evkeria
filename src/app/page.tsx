@@ -328,7 +328,7 @@ export default function HomePage() {
             </Link>
 
             <Button
-              variant="outline"
+              variant = "outline"
               className="px-8 py-6 h-auto rounded-full border-2 border-[#1e4e79] font-outfit font-medium text-[#1e4e79] text-lg bg-transparent hover:bg-[#1e4e79] hover:text-white transition-all duration-200"
             >
               Learn More
