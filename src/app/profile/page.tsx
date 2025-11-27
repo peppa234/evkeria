@@ -1,12 +1,12 @@
 "use client";
 
-import { Navbar } from "@components/Navbar/Navbar";
-import { Footer } from "@components/Footer/Footer";
-import { useProfile } from "@/components/Profile/ProfileContext";
-import { ProfileHeader } from "@/components/Profile/ProfileHeader";
-import { SkillsSection } from "@/components/Profile/SkillsSection";
-import { InterestsSection } from "@/components/Profile/InterestsSection";
-import { SavedOpportunities } from "@/components/Profile/SavedOpportunities";
+import { useProfile } from "@components/Profile/ProfileContext";
+import { ProfileHeader } from "@components/Profile/ProfileHeader";
+import { SkillsSection } from "@components/Profile/SkillsSection";
+import { InterestsSection } from "@components/Profile/InterestsSection";
+import { SavedOpportunities } from "@components/Profile/SavedOpportunities";
+
+export const dynamic = "force-dynamic";
 
 export default function ProfilePage() {
   const { profile, setProfile } = useProfile();
@@ -39,27 +39,23 @@ export default function ProfilePage() {
   };
 
   return (
-    <>
-      <Navbar />
-      <main className="min-h-screen bg-[#0E4374] pb-24">
-        <ProfileHeader
-          name={profile.name}
-          email={profile.email}
-          bio={profile.bio}
-        />
-        <SavedOpportunities />
-        <SkillsSection
-          skills={profile.skills}
-          onAddSkill={addSkill}
-          onRemoveSkill={removeSkill}
-        />
-        <InterestsSection
-          interests={profile.interests}
-          onAddInterest={addInterest}
-          onRemoveInterest={removeInterest}
-        />
-      </main>
-      <Footer />
-    </>
+    <div className="pb-24 pt-40">
+      <ProfileHeader
+        name={profile.name}
+        email={profile.email}
+        bio={profile.bio}
+      />
+      <SavedOpportunities />
+      <SkillsSection
+        skills={profile.skills}
+        onAddSkill={addSkill}
+        onRemoveSkill={removeSkill}
+      />
+      <InterestsSection
+        interests={profile.interests}
+        onAddInterest={addInterest}
+        onRemoveInterest={removeInterest}
+      />
+    </div>
   );
 }

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { dummyEvents } from "@/data/dummy-events";
+import { dummyEvents } from "@data/dummy-events";
 
 export function SavedOpportunities() {
   const router = useRouter();
@@ -52,7 +52,7 @@ export function SavedOpportunities() {
               </div>
 
               <button
-                onClick={() => handleOpen(event.id)}
+                onClick={() => handleOpen(event.id.toString())}
                 className="w-9 h-9 rounded-full border border-[#E4E9F2] flex items-center justify-center hover:bg-[#EFF4FF]"
                 aria-label="View event details"
               >

@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 export function Navbar() {
   const pathname = usePathname();
   const isHomepage = pathname === "/";
+  const isProfilePage = pathname?.startsWith("/profile");
   
   return (
     <>
@@ -65,7 +66,7 @@ export function Navbar() {
             <Image
               className="w-full h-full"
               alt="User profile"
-              src="/group-13.svg"
+              src={isProfilePage ? "/profile-active.svg" : "/group-13.svg"}
               width={51}
               height={51}
             />

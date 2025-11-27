@@ -1,10 +1,10 @@
 "use client";
-import { Navbar } from "@components/Navbar/Navbar";
-import { Footer } from "@components/Footer/Footer";
 import { FormEvent, useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useProfile } from "@/components/Profile/ProfileContext";
+import { useProfile } from "@components/Profile/ProfileContext";
+
+export const dynamic = "force-dynamic";
 
 export default function EditProfilePage() {
   const { profile, setProfile } = useProfile();
@@ -44,9 +44,7 @@ export default function EditProfilePage() {
   };
 
   return (
-    <>
-      <Navbar />
-      <main className="min-h-screen bg-[#0E4374] pb-24 pt-32 relative">
+    <div className="pb-24 pt-32 relative min-h-screen">
         <div className="fixed inset-0 bg-black/30 z-30" />
         <section className="fixed inset-0 z-40 flex items-center justify-center px-4">
           <div className="w-full max-w-2xl rounded-3xl bg-white shadow-2xl px-10 py-10">
@@ -65,7 +63,7 @@ export default function EditProfilePage() {
                   aria-label="Edit photo"
                 >
                   <Image
-                    src="/edit.png"
+                    src="/pencil.svg"
                     alt="Edit photo"
                     width={16}
                     height={16}
@@ -161,8 +159,6 @@ export default function EditProfilePage() {
             </form>
           </div>
         </section>
-      </main>
-      <Footer />
-    </>
+    </div>
   );
 }

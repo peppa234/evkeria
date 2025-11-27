@@ -22,27 +22,27 @@ export function ProfileHeader({ name, email, bio }: Props) {
       <div className="rounded-3xl overflow-hidden bg-white shadow-lg">
         <div className="bg-[#7DB7E9] h-32 relative">
           <div className="absolute -bottom-12 left-10 flex items-end gap-4">
-            <div className="relative w-28 h-28 rounded-full border-4 border-white shadow-lg overflow-hidden">
+            <div className="relative">
               <Image
-                src="/profile_pic.png"
+                src="/profile_pic.svg"
                 alt="Profile picture"
-                fill
-                className="object-cover"
+                width={112}
+                height={112}
+                className="rounded-full border-4 border-white shadow-lg"
               />
+              <button
+                onClick={handleEditClick}
+                className="absolute bottom-0 right-0 w-7 h-7 rounded-full bg-white shadow flex items-center justify-center hover:scale-105 transition z-10"
+                aria-label="Edit profile"
+              >
+                <Image
+                  src="/pencil.svg"
+                  alt="Edit profile"
+                  width={18}
+                  height={18}
+                />
+              </button>
             </div>
-
-            <button
-              onClick={handleEditClick}
-              className="absolute bottom-1 right-1 w-7 h-7 rounded-full bg-white shadow flex items-center justify-center hover:scale-105 transition"
-              aria-label="Edit profile"
-            >
-              <Image
-                src="/edit.png"
-                alt="Edit profile"
-                width={18}
-                height={18}
-              />
-            </button>
           </div>
         </div>
 
