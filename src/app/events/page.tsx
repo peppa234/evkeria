@@ -78,26 +78,28 @@ export default function EventsPage() {
       {/* Hero (same height as home page) */}
       <section className="relative min-h-screen overflow-hidden">
         <Image
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
           alt="Hero background"
           src="/people-taking-part-high-protocol-event 1.png"
           fill
           priority
+          sizes="100vw"
+          quality={90}
         />
 
         <div className="absolute inset-0 bg-gradient-to-r from-[rgba(55,144,223,0.35)] to-[rgba(30,78,121,0.35)]" />
 
-        <div className="relative z-10 flex items-center justify-center min-h-screen px-6 lg:px-16">
-          <div className="w-full max-w-[1031px] text-center">
+        <div className="relative z-10 flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-16">
+          <div className="w-full max-w-4xl xl:max-w-[1031px] text-center">
             <h1
-              className="font-outfit font-semibold text-[96px] leading-[121px] text-white w-[1031px] h-[121px] whitespace-nowrap mx-auto"
+              className="font-outfit font-semibold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[96px] leading-tight sm:leading-normal lg:leading-[121px] text-white mx-auto"
               style={{
                 textShadow: "0px 4px 54.7px rgba(79, 163, 227, 0.63)",
               }}
             >
               Discover Opportunities
             </h1>
-            <p className="font-outfit font-normal text-[24px] leading-[30px] text-white text-center w-[1031px] h-[40px] mx-auto">
+            <p className="font-outfit font-normal text-base sm:text-lg md:text-xl lg:text-2xl xl:text-[24px] leading-relaxed text-white text-center mt-4 sm:mt-6 mx-auto max-w-3xl">
               Find events, volunteering programs, and learning experiences
               across Algeria.
             </p>

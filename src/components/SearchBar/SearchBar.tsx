@@ -84,74 +84,27 @@ export function SearchBar({
   return (
     <div className="w-full max-w-7xl mx-auto px-4">
       {/* Title */}
-      <h2
-        style={{
-          fontFamily: "Outfit, sans-serif",
-          fontWeight: 600,
-          fontSize: "48px",
-          lineHeight: "60px",
-          color: "#1e4e79",
-          textAlign: "center",
-          marginBottom: "32px",
-        }}
-      >
+      <h2 className="font-outfit font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-[48px] leading-tight sm:leading-normal lg:leading-[60px] text-[#1e4e79] text-center mb-6 sm:mb-8">
         Find Opportunities
       </h2>
 
       {/* Search Container */}
-      <div className="relative" style={{ marginBottom: "32px" }}>
-        <div
-          style={{
-            position: "relative",
-            width: "100%",
-            maxWidth: "1255.38px",
-            minHeight: "113.33px",
-            margin: "0 auto",
-            background: "#FFFFFF",
-            boxShadow: "0px 4px 24px rgba(0, 0, 0, 0.08)",
-            borderRadius: "24px",
-            display: "flex",
-            alignItems: "center",
-            padding: "26px",
-            gap: "17px",
-            flexWrap: "wrap",
-          }}
-        >
+      <div className="relative mb-6 sm:mb-8">
+        <div className="relative w-full max-w-5xl xl:max-w-[1255.38px] min-h-[80px] sm:min-h-[113.33px] mx-auto bg-white shadow-[0px_4px_24px_rgba(0,0,0,0.08)] rounded-2xl sm:rounded-3xl flex flex-col sm:flex-row items-stretch sm:items-center p-4 sm:p-6 lg:p-[26px] gap-3 sm:gap-4 lg:gap-[17px]">
           {/* Search Input */}
-          <div
-            style={{
-              flex: "1 1 300px",
-              position: "relative",
-              minWidth: "300px",
-            }}
-          >
+          <div className="flex-1 w-full sm:min-w-0 sm:flex-[1_1_300px] relative">
             <input
               type="text"
               value={queryInput}
               onChange={(e) => setQueryInput(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Search events, volunteering, trainings…"
-              style={{
-                width: "100%",
-                height: "61.03px",
-                background: "#F9FAFB",
-                border: "1px solid #E5E7EB",
-                borderRadius: "12px",
-                padding: "0 28px",
-                fontFamily: "Outfit, sans-serif",
-                fontWeight: 400,
-                fontSize: "16px",
-                lineHeight: "20px",
-                color: "#374151",
-                outline: "none",
-                boxSizing: "border-box",
-              }}
-              className="placeholder-gray-400"
+              className="w-full h-12 sm:h-[61.03px] bg-[#F9FAFB] border border-[#E5E7EB] rounded-xl font-outfit font-normal text-sm sm:text-base text-[#374151] outline-none focus:border-[#4fa3e3] px-4 sm:px-7 placeholder-gray-400"
             />
           </div>
 
           {/* Location Dropdown */}
-          <div style={{ position: "relative", width: "174.36px" }}>
+          <div className="relative w-full sm:w-auto sm:flex-shrink-0">
             <button
               type="button"
               onClick={() => {
@@ -159,45 +112,13 @@ export function SearchBar({
                 setShowTypeDropdown(false);
                 setShowTimeDropdown(false);
               }}
-              style={{
-                width: "100%",
-                height: "61.03px",
-                background: "#F9FAFB",
-                border: "1px solid #E5E7EB",
-                borderRadius: "12px",
-                fontFamily: "Outfit, sans-serif",
-                fontWeight: 400,
-                fontSize: "16px",
-                lineHeight: "24px",
-                color: "#374151",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "8px",
-                cursor: "pointer",
-                outline: "none",
-                boxSizing: "border-box",
-              }}
+              className="w-full sm:w-[140px] lg:w-[174.36px] h-12 sm:h-[61.03px] bg-[#F9FAFB] border border-[#E5E7EB] rounded-xl font-outfit font-normal text-sm sm:text-base text-[#374151] flex items-center justify-center gap-2 cursor-pointer outline-none hover:bg-[#F3F4F6] transition-colors"
             >
-              <span>{wilaya || "Wilaya"}</span>
-              <ChevronDown size={21.79} style={{ color: "#374151" }} />
+              <span className="truncate">{wilaya || "Wilaya"}</span>
+              <ChevronDown size={20} className="text-[#374151] flex-shrink-0" />
             </button>
             {showLocationDropdown && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: "calc(100% + 8px)",
-                  left: 0,
-                  right: 0,
-                  background: "#FFFFFF",
-                  border: "1px solid #E5E7EB",
-                  borderRadius: "12px",
-                  boxShadow: "0px 4px 24px rgba(0, 0, 0, 0.08)",
-                  zIndex: 50,
-                  maxHeight: "240px",
-                  overflowY: "auto",
-                }}
-              >
+              <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-[#E5E7EB] rounded-xl shadow-[0px_4px_24px_rgba(0,0,0,0.08)] z-50 max-h-60 overflow-y-auto">
                 {locations.map((loc) => (
                   <button
                     key={loc.value}
@@ -207,24 +128,7 @@ export function SearchBar({
                       setCurrentPage(1);
                       setShowLocationDropdown(false);
                     }}
-                    style={{
-                      width: "100%",
-                      padding: "12px 20px",
-                      textAlign: "left",
-                      background: "transparent",
-                      border: "none",
-                      fontFamily: "Outfit, sans-serif",
-                      fontSize: "16px",
-                      color: "#374151",
-                      cursor: "pointer",
-                      transition: "background 0.2s",
-                    }}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.background = "#F9FAFB")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.background = "transparent")
-                    }
+                    className="w-full px-4 sm:px-5 py-3 text-left bg-transparent border-none font-outfit text-sm sm:text-base text-[#374151] cursor-pointer hover:bg-[#F9FAFB] transition-colors"
                   >
                     {loc.label}
                   </button>
@@ -234,7 +138,7 @@ export function SearchBar({
           </div>
 
           {/* Type Dropdown */}
-          <div style={{ position: "relative", width: "152.56px" }}>
+          <div className="relative w-full sm:w-auto sm:flex-shrink-0">
             <button
               type="button"
               onClick={() => {
@@ -242,45 +146,13 @@ export function SearchBar({
                 setShowLocationDropdown(false);
                 setShowTimeDropdown(false);
               }}
-              style={{
-                width: "100%",
-                height: "61.03px",
-                background: "#F9FAFB",
-                border: "1px solid #E5E7EB",
-                borderRadius: "12px",
-                fontFamily: "Outfit, sans-serif",
-                fontWeight: 400,
-                fontSize: "16px",
-                lineHeight: "24px",
-                color: "#374151",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "8px",
-                cursor: "pointer",
-                outline: "none",
-                boxSizing: "border-box",
-              }}
+              className="w-full sm:w-[130px] lg:w-[152.56px] h-12 sm:h-[61.03px] bg-[#F9FAFB] border border-[#E5E7EB] rounded-xl font-outfit font-normal text-sm sm:text-base text-[#374151] flex items-center justify-center gap-2 cursor-pointer outline-none hover:bg-[#F3F4F6] transition-colors"
             >
-              <span>{type || "Type"}</span>
-              <ChevronDown size={21.79} style={{ color: "#374151" }} />
+              <span className="truncate">{type || "Type"}</span>
+              <ChevronDown size={20} className="text-[#374151] flex-shrink-0" />
             </button>
             {showTypeDropdown && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: "calc(100% + 8px)",
-                  left: 0,
-                  right: 0,
-                  background: "#FFFFFF",
-                  border: "1px solid #E5E7EB",
-                  borderRadius: "12px",
-                  boxShadow: "0px 4px 24px rgba(0, 0, 0, 0.08)",
-                  zIndex: 50,
-                  maxHeight: "240px",
-                  overflowY: "auto",
-                }}
-              >
+              <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-[#E5E7EB] rounded-xl shadow-[0px_4px_24px_rgba(0,0,0,0.08)] z-50 max-h-60 overflow-y-auto">
                 {types.map((t) => (
                   <button
                     key={t.value}
@@ -290,24 +162,7 @@ export function SearchBar({
                       setCurrentPage(1);
                       setShowTypeDropdown(false);
                     }}
-                    style={{
-                      width: "100%",
-                      padding: "12px 20px",
-                      textAlign: "left",
-                      background: "transparent",
-                      border: "none",
-                      fontFamily: "Outfit, sans-serif",
-                      fontSize: "16px",
-                      color: "#374151",
-                      cursor: "pointer",
-                      transition: "background 0.2s",
-                    }}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.background = "#F9FAFB")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.background = "transparent")
-                    }
+                    className="w-full px-4 sm:px-5 py-3 text-left bg-transparent border-none font-outfit text-sm sm:text-base text-[#374151] cursor-pointer hover:bg-[#F9FAFB] transition-colors"
                   >
                     {t.label}
                   </button>
@@ -317,7 +172,7 @@ export function SearchBar({
           </div>
 
           {/* Time Dropdown */}
-          <div style={{ position: "relative", width: "152.56px" }}>
+          <div className="relative w-full sm:w-auto sm:flex-shrink-0">
             <button
               type="button"
               onClick={() => {
@@ -325,45 +180,13 @@ export function SearchBar({
                 setShowLocationDropdown(false);
                 setShowTypeDropdown(false);
               }}
-              style={{
-                width: "100%",
-                height: "61.03px",
-                background: "#F9FAFB",
-                border: "1px solid #E5E7EB",
-                borderRadius: "12px",
-                fontFamily: "Outfit, sans-serif",
-                fontWeight: 400,
-                fontSize: "16px",
-                lineHeight: "24px",
-                color: "#374151",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "8px",
-                cursor: "pointer",
-                outline: "none",
-                boxSizing: "border-box",
-              }}
+              className="w-full sm:w-[130px] lg:w-[152.56px] h-12 sm:h-[61.03px] bg-[#F9FAFB] border border-[#E5E7EB] rounded-xl font-outfit font-normal text-sm sm:text-base text-[#374151] flex items-center justify-center gap-2 cursor-pointer outline-none hover:bg-[#F3F4F6] transition-colors"
             >
-              <span>{time || "Time"}</span>
-              <ChevronDown size={21.79} style={{ color: "#374151" }} />
+              <span className="truncate">{time || "Time"}</span>
+              <ChevronDown size={20} className="text-[#374151] flex-shrink-0" />
             </button>
             {showTimeDropdown && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: "calc(100% + 8px)",
-                  left: 0,
-                  right: 0,
-                  background: "#FFFFFF",
-                  border: "1px solid #E5E7EB",
-                  borderRadius: "12px",
-                  boxShadow: "0px 4px 24px rgba(0, 0, 0, 0.08)",
-                  zIndex: 50,
-                  maxHeight: "240px",
-                  overflowY: "auto",
-                }}
-              >
+              <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-[#E5E7EB] rounded-xl shadow-[0px_4px_24px_rgba(0,0,0,0.08)] z-50 max-h-60 overflow-y-auto">
                 {times.map((t) => (
                   <button
                     key={t.value}
@@ -373,24 +196,7 @@ export function SearchBar({
                       setCurrentPage(1);
                       setShowTimeDropdown(false);
                     }}
-                    style={{
-                      width: "100%",
-                      padding: "12px 20px",
-                      textAlign: "left",
-                      background: "transparent",
-                      border: "none",
-                      fontFamily: "Outfit, sans-serif",
-                      fontSize: "16px",
-                      color: "#374151",
-                      cursor: "pointer",
-                      transition: "background 0.2s",
-                    }}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.background = "#F9FAFB")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.background = "transparent")
-                    }
+                    className="w-full px-4 sm:px-5 py-3 text-left bg-transparent border-none font-outfit text-sm sm:text-base text-[#374151] cursor-pointer hover:bg-[#F9FAFB] transition-colors"
                   >
                     {t.label}
                   </button>
@@ -405,84 +211,30 @@ export function SearchBar({
               e.preventDefault();
               onSearchSubmit(e as any);
             }}
-            style={{
-              width: "153.65px",
-              height: "61.03px",
-              background: "#F7C948",
-              boxShadow: "0px 2px 8px rgba(30, 78, 121, 0.24)",
-              borderRadius: "12px",
-              border: "none",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "8px",
-              fontFamily: "Outfit, sans-serif",
-              fontWeight: 600,
-              fontSize: "16px",
-              lineHeight: "24px",
-              color: "#FFFFFF",
-              transition: "background 0.2s",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = "#E5B632")}
-            onMouseLeave={(e) => (e.currentTarget.style.background = "#F7C948")}
+            className="w-full sm:w-[140px] lg:w-[153.65px] h-12 sm:h-[61.03px] bg-[#F7C948] shadow-[0px_2px_8px_rgba(30,78,121,0.24)] rounded-xl border-none cursor-pointer flex items-center justify-center gap-2 font-outfit font-semibold text-sm sm:text-base text-white hover:bg-[#E5B632] transition-colors"
           >
-            <Search size={21.79} style={{ color: "#FFFFFF" }} />
+            <Search size={20} className="text-white" />
             <span>Search</span>
           </button>
         </div>
       </div>
 
       {/* Popular Searches */}
-      <div style={{ textAlign: "center", marginBottom: "32px" }}>
-        <span
-          style={{
-            fontFamily: "Outfit, sans-serif",
-            fontWeight: 400,
-            fontSize: "14px",
-            lineHeight: "21px",
-            color: "#6B7280",
-            marginRight: "8px",
-          }}
-        >
+      <div className="text-center mb-6 sm:mb-8 flex flex-wrap items-center justify-center gap-1 sm:gap-2">
+        <span className="font-outfit font-normal text-xs sm:text-sm text-[#6B7280]">
           Popular searches:
         </span>
         {popularSearches.map((search, index) => (
-          <span key={search.value}>
+          <span key={search.value} className="flex items-center">
             <button
               type="button"
               onClick={() => handlePopularSearch(search)}
-              style={{
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                fontFamily: "Outfit, sans-serif",
-                fontWeight: 500,
-                fontSize: "14px",
-                lineHeight: "21px",
-                color: "#1E4E79",
-                textDecoration: "none",
-              }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.textDecoration = "underline")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.textDecoration = "none")
-              }
+              className="font-outfit font-medium text-xs sm:text-sm text-[#1E4E79] hover:underline transition-all bg-transparent border-none cursor-pointer"
             >
               {search.label}
             </button>
             {index < popularSearches.length - 1 && (
-              <span
-                style={{
-                  fontFamily: "Outfit, sans-serif",
-                  fontWeight: 400,
-                  fontSize: "14px",
-                  lineHeight: "21px",
-                  color: "#6B7280",
-                  margin: "0 4px",
-                }}
-              >
+              <span className="font-outfit font-normal text-xs sm:text-sm text-[#6B7280] mx-1 sm:mx-2">
                 ,
               </span>
             )}

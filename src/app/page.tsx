@@ -78,20 +78,22 @@ export default function HomePage() {
     <div className="bg-white w-full overflow-x-hidden">
       <section className="relative min-h-screen overflow-hidden">
         <Image
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
           alt="Hero background"
           src="/chatgpt-image-nov-17--2025--09-23-07-pm-1.png"
           fill
           priority
+          sizes="100vw"
+          quality={90}
         />
 
-        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(55,144,223,0.43)] to-[rgba(30,78,121,0.43)]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(55,144,223,0.43)] to-[rgba(30,78,121,0.43)] transition-opacity duration-500" />
 
-        <div className="absolute -left-1/4 top-3/4 w-[800px] h-[400px] bg-[#4fa3e3a1] rounded-full blur-[150px] opacity-60" />
+        <div className="absolute -left-1/4 top-3/4 w-[800px] h-[400px] bg-[#4fa3e3a1] rounded-full blur-[150px] opacity-60 animate-pulse" />
 
-        <div className="relative z-10 flex items-center min-h-screen px-16 lg:px-32">
-          <div className="max-w-3xl">
-            <h1 className="font-outfit font-semibold text-7xl lg:text-8xl leading-tight mb-8">
+        <div className="relative z-10 flex items-center min-h-screen px-4 sm:px-6 md:px-8 lg:px-16 xl:px-32">
+          <div className="max-w-3xl w-full animate-fade-in">
+            <h1 className="font-outfit font-semibold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-tight mb-6 sm:mb-8 animate-slide-up">
               <span className="text-white">
                 Discover, Network <br />
                 &amp;{" "}
@@ -100,20 +102,20 @@ export default function HomePage() {
               <span className="text-white">.</span>
             </h1>
 
-            <p className="font-outfit font-normal text-white text-3xl lg:text-4xl leading-relaxed mb-12">
+            <p className="font-outfit font-normal text-white text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-relaxed mb-8 sm:mb-10 lg:mb-12 animate-slide-up delay-100">
               Explore volunteering, events, trainings, and exchange programs across
               Algeria — all in one place.
             </p>
 
-            <div className="flex gap-4">
-              <Link href="/events">
-                <Button className="px-8 py-6 h-auto rounded-2xl bg-white/10 backdrop-blur-md border border-white/30 shadow-lg font-outfit font-medium text-white text-xl hover:bg-[#1e4e79]/90 hover:border-[#1e4e79] hover:backdrop-blur-none transition-all duration-200">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 animate-slide-up delay-200">
+              <Link href="/events" className="w-full sm:w-auto">
+                <Button className="w-full sm:w-auto px-6 sm:px-8 py-4 sm:py-6 h-auto rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-md border border-white/30 shadow-lg font-outfit font-medium text-white text-base sm:text-lg lg:text-xl hover:bg-[#1e4e79]/90 hover:border-[#1e4e79] hover:backdrop-blur-none hover:scale-105 active:scale-95 transition-all duration-300 ease-out">
                   Browse Events
                 </Button>
               </Link>
 
-              <Link href="/auth/signup">
-                <Button className="px-8 py-6 h-auto rounded-2xl bg-gradient-to-r from-[#4fa3e3] to-[#6fb3e6] font-outfit font-medium text-white text-xl hover:shadow-xl hover:scale-105 transition-all duration-200">
+              <Link href="/auth/signup" className="w-full sm:w-auto">
+                <Button className="w-full sm:w-auto px-6 sm:px-8 py-4 sm:py-6 h-auto rounded-xl sm:rounded-2xl bg-gradient-to-r from-[#4fa3e3] to-[#6fb3e6] font-outfit font-medium text-white text-base sm:text-lg lg:text-xl hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 ease-out">
                   Register Now
                 </Button>
               </Link>
@@ -137,29 +139,32 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-8 lg:px-16">
-          <h2 className="font-outfit font-semibold text-[#1e4e79] text-5xl lg:text-6xl text-center mb-6">
+      <section className="py-12 sm:py-16 lg:py-20 bg-white animate-fade-in">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
+          <h2 className="font-outfit font-semibold text-[#1e4e79] text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-center mb-4 sm:mb-6 animate-slide-up">
             Featured Opportunities
           </h2>
 
-          <p className="font-outfit font-normal text-[#4fa3e3] text-xl lg:text-2xl text-center mb-16">
+          <p className="font-outfit font-normal text-[#4fa3e3] text-base sm:text-lg md:text-xl lg:text-2xl text-center mb-10 sm:mb-12 lg:mb-16">
             Handpicked programs and events happening now.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {featuredOpportunities.map((opportunity) => (
               <Card
                 key={opportunity.id}
-                className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden"
+                className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 ease-out overflow-hidden hover:scale-[1.02] hover:-translate-y-2 active:scale-100"
               >
                 <CardContent className="p-0">
-                  <div className="relative h-52">
+                  <div className="relative h-48 sm:h-52">
                     <Image
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transition-opacity duration-300"
                       alt={opportunity.title}
                       src={opportunity.image}
                       fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      quality={90}
+                      loading="lazy"
                     />
                     {opportunity.hasOverlay && (
                       <div className="absolute inset-0 bg-black/25" />
@@ -171,36 +176,36 @@ export default function HomePage() {
                     </Badge>
                   </div>
 
-                  <div className="p-6">
-                    <h3 className="font-outfit font-semibold text-[#1e4e79] text-2xl leading-tight mb-6">
+                  <div className="p-4 sm:p-6">
+                    <h3 className="font-outfit font-semibold text-[#1e4e79] text-xl sm:text-2xl leading-tight mb-4 sm:mb-6">
                       {opportunity.title}
                     </h3>
 
                     <div className="flex items-center gap-2 mb-3">
                       <div className="w-2 h-2 bg-[#4fa3e3] rounded-full" />
-                      <p className="font-outfit font-medium text-[#4fa3e3] text-base">
+                      <p className="font-outfit font-medium text-[#4fa3e3] text-sm sm:text-base">
                         {opportunity.organization}
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-6 mb-4">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6 mb-4">
                       <div className="flex items-center gap-2">
                         <Image className="w-4 h-4" alt="Location" src="/frame-3.svg" width={16} height={16} />
-                        <span className="font-outfit font-normal text-[#1e4e79] text-sm">
+                        <span className="font-outfit font-normal text-[#1e4e79] text-xs sm:text-sm">
                           {opportunity.location}
                         </span>
                       </div>
 
                       <div className="flex items-center gap-2">
                         <Image className="w-4 h-4" alt="Date" src="/frame-4.svg" width={16} height={16} />
-                        <span className="font-outfit font-normal text-[#1e4e79] text-sm">
+                        <span className="font-outfit font-normal text-[#1e4e79] text-xs sm:text-sm">
                           {opportunity.date}
                         </span>
                       </div>
                     </div>
 
                     <Link href={`/events/${opportunity.id}`}>
-                      <Button className="w-full h-12 rounded-2xl bg-gradient-to-r from-[#4fa3e3] to-[#6fb3e6] font-outfit font-medium text-white text-base hover:shadow-lg hover:scale-[1.02] transition-all duration-200">
+                      <Button className="w-full h-11 sm:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-r from-[#4fa3e3] to-[#6fb3e6] font-outfit font-medium text-white text-sm sm:text-base hover:shadow-lg hover:scale-[1.02] transition-all duration-200">
                         View Details
                       </Button>
                     </Link>
@@ -212,17 +217,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="relative py-32 lg:py-40 bg-[#1e4e79] overflow-hidden">
-        <div className="absolute -top-32 left-0 right-0 h-64 bg-white rounded-[50%] transform -translate-y-1/2" />
+      <section className="relative py-16 sm:py-24 md:py-32 lg:py-40 bg-[#1e4e79] overflow-hidden">
+        <div className="absolute -top-16 sm:-top-32 left-0 right-0 h-32 sm:h-64 bg-white rounded-[50%] transform -translate-y-1/2" />
 
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -left-1/4 top-1/2 w-[800px] h-[400px] bg-[#4fa3e385] rounded-full blur-[150px] opacity-60" />
+          <div className="absolute -left-1/4 top-1/2 w-[400px] sm:w-[600px] lg:w-[800px] h-[200px] sm:h-[300px] lg:h-[400px] bg-[#4fa3e385] rounded-full blur-[100px] sm:blur-[150px] opacity-60" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-8 lg:px-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center min-h-[600px]">
-            <div className="relative flex justify-center lg:justify-start">
-              <div className="relative w-full max-w-[500px] lg:max-w-[600px]">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16 lg:gap-24 items-center min-h-[400px] sm:min-h-[500px] lg:min-h-[600px]">
+            <div className="relative flex justify-center lg:justify-start order-2 lg:order-1">
+              <div className="relative w-full max-w-[300px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[600px]">
                 <Image
                   className="relative z-10 w-full h-auto object-cover rounded-full"
                   alt="Evkeria community"
@@ -231,16 +236,16 @@ export default function HomePage() {
                   height={600}
                 />
                 <div className="absolute inset-0 bg-[#1e4e7936] rounded-full" />
-                <div className="absolute top-1/2 right-0 transform translate-x-1/4 -translate-y-1/2 w-40 h-44 rounded-full backdrop-blur-sm backdrop-brightness-110 bg-gradient-to-b from-[rgba(79,163,227,0.41)] to-[rgba(44,90,125,0.41)] border border-white/20 shadow-inner" />
+                <div className="absolute top-1/2 right-0 transform translate-x-1/4 -translate-y-1/2 w-24 h-28 sm:w-32 sm:h-36 lg:w-40 lg:h-44 rounded-full backdrop-blur-sm backdrop-brightness-110 bg-gradient-to-b from-[rgba(79,163,227,0.41)] to-[rgba(44,90,125,0.41)] border border-white/20 shadow-inner" />
               </div>
             </div>
 
-            <div className="text-white">
-              <h2 className="font-outfit font-semibold text-6xl lg:text-7xl mb-12">
+            <div className="text-white order-1 lg:order-2">
+              <h2 className="font-outfit font-semibold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-6 sm:mb-8 lg:mb-12">
                 What is Evkeria?
               </h2>
 
-              <div className="font-outfit text-3xl lg:text-4xl leading-relaxed space-y-8">
+              <div className="font-outfit text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-relaxed space-y-4 sm:space-y-6 lg:space-y-8">
                 <p>
                   <span className="font-semibold">Evkeria</span> is a platform that helps{" "}
                   <span className="font-semibold">students</span> and{" "}
@@ -255,30 +260,30 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="absolute -bottom-32 left-0 right-0 h-64 bg-white rounded-[50%] transform translate-y-1/2" />
+        <div className="absolute -bottom-16 sm:-bottom-32 left-0 right-0 h-32 sm:h-64 bg-white rounded-[50%] transform translate-y-1/2" />
       </section>
 
-      <section className="relative py-32 lg:py-40 bg-white overflow-hidden">
-        <div className="absolute -top-20 -left-20 w-96 h-96 bg-[#8cc2eb] rounded-full blur-[120px] opacity-30 pointer-events-none" />
-        <div className="absolute -top-20 -right-20 w-96 h-96 bg-[#8cc2eb] rounded-full blur-[120px] opacity-30 pointer-events-none" />
-        <div className="absolute top-1/2 -left-32 w-80 h-80 bg-[#4fa3e3] rounded-full blur-[100px] opacity-20 pointer-events-none" />
-        <div className="absolute top-1/2 -right-32 w-80 h-80 bg-[#4fa3e3] rounded-full blur-[100px] opacity-20 pointer-events-none" />
+      <section className="relative py-16 sm:py-24 md:py-32 lg:py-40 bg-white overflow-hidden">
+        <div className="absolute -top-10 sm:-top-20 -left-10 sm:-left-20 w-48 sm:w-96 h-48 sm:h-96 bg-[#8cc2eb] rounded-full blur-[80px] sm:blur-[120px] opacity-30 pointer-events-none" />
+        <div className="absolute -top-10 sm:-top-20 -right-10 sm:-right-20 w-48 sm:w-96 h-48 sm:h-96 bg-[#8cc2eb] rounded-full blur-[80px] sm:blur-[120px] opacity-30 pointer-events-none" />
+        <div className="absolute top-1/2 -left-16 sm:-left-32 w-40 sm:w-80 h-40 sm:h-80 bg-[#4fa3e3] rounded-full blur-[60px] sm:blur-[100px] opacity-20 pointer-events-none" />
+        <div className="absolute top-1/2 -right-16 sm:-right-32 w-40 sm:w-80 h-40 sm:h-80 bg-[#4fa3e3] rounded-full blur-[60px] sm:blur-[100px] opacity-20 pointer-events-none" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-8 lg:px-16">
-          <h2 className="font-outfit font-semibold text-[#1e4e79] text-5xl lg:text-6xl text-center mb-6">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
+          <h2 className="font-outfit font-semibold text-[#1e4e79] text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-center mb-4 sm:mb-6">
             Why Evkeria?
           </h2>
 
-          <p className="font-outfit font-normal text-[#4fa3e3] text-xl lg:text-2xl text-center max-w-2xl mx-auto mb-16">
+          <p className="font-outfit font-normal text-[#4fa3e3] text-base sm:text-lg md:text-xl lg:text-2xl text-center max-w-2xl mx-auto mb-10 sm:mb-12 lg:mb-16 px-4">
             A platform built to help you grow, connect, and discover real
             opportunities.
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {whyEvkeriaFeatures.map((feature) => (
               <Card
                 key={feature.id}
-                className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
+                className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02]"
               >
                 <CardContent className="flex flex-col items-center p-8">
                   <div className="w-16 h-16 bg-[#4fa3e3] rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -299,37 +304,37 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="relative py-20 bg-white overflow-hidden">
-        <div className="absolute -right-1/4 top-1/2 w-[800px] h-[400px] bg-[#4fa3e370] rounded-full blur-[150px] opacity-60" />
+      <section className="relative py-12 sm:py-16 lg:py-20 bg-white overflow-hidden">
+        <div className="absolute -right-1/4 top-1/2 w-[400px] sm:w-[600px] lg:w-[800px] h-[200px] sm:h-[300px] lg:h-[400px] bg-[#4fa3e370] rounded-full blur-[100px] sm:blur-[150px] opacity-60" />
         
         <Image
-          className="absolute top-20 right-32 w-14 h-14 opacity-20"
+          className="hidden sm:block absolute top-10 sm:top-20 right-16 sm:right-32 w-10 h-10 sm:w-14 sm:h-14 opacity-20"
           alt="Decorative icon"
           src="/frame-7.svg"
           width={56}
           height={56}
         />
 
-        <div className="relative z-10 max-w-4xl mx-auto px-8 lg:px-16 text-center">
-          <h2 className="font-outfit font-semibold text-[#1e4e79] text-5xl lg:text-6xl mb-6">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 md:px-8 lg:px-16 text-center">
+          <h2 className="font-outfit font-semibold text-[#1e4e79] text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6">
             Are You an Organization?
           </h2>
 
-          <p className="font-outfit font-normal text-[#6eb2e6] text-xl lg:text-2xl mb-12 max-w-3xl mx-auto">
+          <p className="font-outfit font-normal text-[#6eb2e6] text-base sm:text-lg md:text-xl lg:text-2xl mb-8 sm:mb-10 lg:mb-12 max-w-3xl mx-auto">
             Share your events and reach thousands of motivated students and young
             professionals across Algeria.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
-            <Link href="/auth/organization/signup">
-              <Button className="px-8 py-6 h-auto bg-[#1e4e79] rounded-full font-outfit font-medium text-white text-lg hover:bg-[#2c5f8f] hover:shadow-xl transition-all duration-200">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center items-center">
+            <Link href="/auth/organization/signup" className="w-full sm:w-auto">
+              <Button className="w-full sm:w-auto px-6 sm:px-8 py-4 sm:py-6 h-auto bg-[#1e4e79] rounded-full font-outfit font-medium text-white text-base sm:text-lg hover:bg-[#2c5f8f] hover:shadow-xl transition-all duration-200">
                 Create Organization Account
               </Button>
             </Link>
 
             <Button
               variant = "outline"
-              className="px-8 py-6 h-auto rounded-full border-2 border-[#1e4e79] font-outfit font-medium text-[#1e4e79] text-lg bg-transparent hover:bg-[#1e4e79] hover:text-white transition-all duration-200"
+              className="w-full sm:w-auto px-6 sm:px-8 py-4 sm:py-6 h-auto rounded-full border-2 border-[#1e4e79] font-outfit font-medium text-[#1e4e79] text-base sm:text-lg bg-transparent hover:bg-[#1e4e79] hover:text-white transition-all duration-200"
             >
               Learn More
             </Button>

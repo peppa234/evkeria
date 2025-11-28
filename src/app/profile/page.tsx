@@ -39,7 +39,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="pb-24 pt-40">
+    <div className="pb-12 sm:pb-16 md:pb-24 pt-20 sm:pt-32 md:pt-40">
       <ProfileHeader
         name={profile.name}
         email={profile.email}

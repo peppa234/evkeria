@@ -49,13 +49,13 @@ export function LoginForm() {
   }
 
   return (
-    <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
-      <div className="text-center mb-8">
-        <h1 className="text-2xl font-bold text-[#1e3a5f] mb-2">Welcome Back</h1>
-        <p className="text-gray-500 text-sm">Sign in to your account</p>
+    <div className="w-full max-w-md bg-white rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6 md:p-8">
+      <div className="text-center mb-6 sm:mb-8">
+        <h1 className="text-xl sm:text-2xl font-bold text-[#1e3a5f] mb-2">Welcome Back</h1>
+        <p className="text-gray-500 text-xs sm:text-sm">Sign in to your account</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
         <div className="space-y-2">
           <label htmlFor="email" className="block text-gray-700 text-sm font-medium">
             Email
@@ -69,7 +69,7 @@ export function LoginForm() {
               setEmail(e.target.value)
               if (errors.email) setErrors({ ...errors, email: undefined })
             }}
-            className={`w-full h-12 px-4 border rounded-lg outline-none transition-colors focus:border-[#1e3a5f] focus:ring-1 focus:ring-[#1e3a5f] ${
+            className={`w-full h-11 sm:h-12 px-3 sm:px-4 border rounded-lg outline-none transition-colors focus:border-[#1e3a5f] focus:ring-1 focus:ring-[#1e3a5f] text-sm sm:text-base ${
               errors.email ? "border-red-500" : "border-gray-200"
             }`}
           />
@@ -90,7 +90,7 @@ export function LoginForm() {
                 setPassword(e.target.value)
                 if (errors.password) setErrors({ ...errors, password: undefined })
               }}
-              className={`w-full h-12 px-4 pr-12 border rounded-lg outline-none transition-colors focus:border-[#1e3a5f] focus:ring-1 focus:ring-[#1e3a5f] ${
+              className={`w-full h-11 sm:h-12 px-3 sm:px-4 pr-10 sm:pr-12 border rounded-lg outline-none transition-colors focus:border-[#1e3a5f] focus:ring-1 focus:ring-[#1e3a5f] text-sm sm:text-base ${
                 errors.password ? "border-red-500" : "border-gray-200"
               }`}
             />
@@ -119,7 +119,7 @@ export function LoginForm() {
         <Button
           type="submit"
           disabled={isLoading}
-          className="w-full h-12 bg-[#1e3a5f] hover:bg-[#162d4d] text-white font-medium rounded-lg transition-colors"
+          className="w-full h-11 sm:h-12 bg-[#1e3a5f] hover:bg-[#162d4d] text-white font-medium text-sm sm:text-base rounded-lg transition-colors"
         >
           {isLoading ? (
             <>

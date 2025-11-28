@@ -44,10 +44,10 @@ export default function EditProfilePage() {
   };
 
   return (
-    <div className="pb-24 pt-32 relative min-h-screen">
+    <div className="pb-12 sm:pb-24 pt-20 sm:pt-32 relative min-h-screen">
         <div className="fixed inset-0 bg-black/30 z-30" />
-        <section className="fixed inset-0 z-40 flex items-center justify-center px-4">
-          <div className="w-full max-w-2xl rounded-3xl bg-white shadow-2xl px-10 py-10">
+        <section className="fixed inset-0 z-40 flex items-center justify-center px-4 sm:px-6 overflow-y-auto">
+          <div className="w-full max-w-2xl rounded-2xl sm:rounded-3xl bg-white shadow-2xl px-4 sm:px-6 md:px-10 py-6 sm:py-8 md:py-10 my-4">
             <div className="flex flex-col items-center mb-8">
               <div className="relative w-28 h-28 rounded-full border-4 border-white shadow-lg overflow-hidden">
                 <Image
