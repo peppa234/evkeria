@@ -17,14 +17,14 @@ export default function EventsPage() {
   const [type, setType] = useState<string>("");
   const [time, setTime] = useState<string>("");
 
-  // Submit merges the big input with useSearch
+  
   const onSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSearchQuery(queryInput.trim());
     setCurrentPage(1);
   };
 
-  // Apply additional client filters on top of useSearch results
+  
   const fullyFilteredEvents = useMemo(() => {
     return filteredEvents.filter((ev) => {
       const wilayaOk = wilaya
@@ -35,10 +35,10 @@ export default function EventsPage() {
           ev.badge.toLowerCase() === type.toLowerCase()
         : true;
 
-      // Basic time filter examples; adjust to your real data if you have start/end dates
+ 
       const timeOk = (() => {
         if (!time) return true;
-        const d = new Date(ev.date); // expects parseable date strings
+        const d = new Date(ev.date); 
         const today = new Date();
         if (time === "This Week") {
           const in7 = new Date(today);
@@ -61,7 +61,7 @@ export default function EventsPage() {
     });
   }, [filteredEvents, wilaya, type, time]);
 
-  // Pagination: 12 per page
+ 
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 12;
   const totalItems = fullyFilteredEvents.length;
@@ -75,7 +75,7 @@ export default function EventsPage() {
 
   return (
     <div className="bg-white w-full overflow-x-hidden">
-      {/* Hero (same height as home page) */}
+ 
       <section className="relative min-h-screen overflow-hidden">
         <Image
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
@@ -140,7 +140,7 @@ export default function EventsPage() {
             setCurrentPage={setCurrentPage}
           />
 
-          {/* Grid */}
+         
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {paginatedEvents.map((event) => (
               <EventCard key={event.id} event={event} />
