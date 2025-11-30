@@ -24,7 +24,7 @@ export function ProfileHeader({ name, email, bio }: Props) {
           <div className="absolute -bottom-8 sm:-bottom-10 md:-bottom-12 left-4 sm:left-6 md:left-10 flex items-end gap-3 sm:gap-4">
             <div className="relative">
               <Image
-                src="/profile_pic.svg"
+                src="/profile_pic.png"
                 alt="Profile picture"
                 width={112}
                 height={112}
