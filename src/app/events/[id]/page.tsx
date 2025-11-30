@@ -64,12 +64,12 @@ export default function EventPage({ params }: Props) {
               </div>
             </div>
 
-            {/* Hero right-side card removed as requested */}
+           
           </div>
         </div>
       </div>
 
-      {/* Main content (moved to reusable component) */}
+   
       <SingleEventContent event={event as Event} />
     </div>
   );
