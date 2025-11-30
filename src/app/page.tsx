@@ -80,7 +80,7 @@ export default function HomePage() {
         <Image
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
           alt="Hero background"
-          src="/chatgpt-image-nov-17--2025--09-23-07-pm-1.png"
+          src="/Hero-section-bg-image.png"
           fill
           priority
           sizes="100vw"
@@ -139,9 +139,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="py-12 sm:py-16 lg:py-20 bg-white animate-fade-in">
+      <section className="py-12 sm:py-16 lg:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
-          <h2 className="font-outfit font-semibold text-[#1e4e79] text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-center mb-4 sm:mb-6 animate-slide-up">
+          <h2 className="font-outfit font-semibold text-[#1e4e79] text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-center mb-4 sm:mb-6">
             Featured Opportunities
           </h2>
 
@@ -253,7 +253,7 @@ export default function HomePage() {
                 </p>
 
                 <p>
-                  From <span className="font-semibold text-[#6eb2e6]">volunteering</span> to events and trainings, everything is gathered in one simple, accessible platform to support youth growth and development.
+                  From <span className="font-semibold text-[#6eb2e6]">volunteering</span> to events and trainings,                   everything is gathered in one simple, accessible platform to support youth growth and development.
                 </p>
               </div>
             </div>
@@ -326,19 +326,19 @@ export default function HomePage() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center items-center">
-            <Link href="/auth/organization/signup" className="w-full sm:w-auto">
-              <Button className="w-full sm:w-auto px-6 sm:px-8 py-4 sm:py-6 h-auto bg-[#1e4e79] rounded-full font-outfit font-medium text-white text-base sm:text-lg hover:bg-[#2c5f8f] hover:shadow-xl transition-all duration-200">
-                Create Organization Account
-              </Button>
-            </Link>
+              <Link href="/auth/organization/signup" className="w-full sm:w-auto">
+                <Button className="w-full sm:w-auto px-6 sm:px-8 py-4 sm:py-6 h-auto bg-[#1e4e79] rounded-full font-outfit font-medium text-white text-base sm:text-lg hover:bg-[#2c5f8f] hover:shadow-xl transition-all duration-200">
+                  Create Organization Account
+                </Button>
+              </Link>
 
-            <Button
-              variant = "outline"
-              className="w-full sm:w-auto px-6 sm:px-8 py-4 sm:py-6 h-auto rounded-full border-2 border-[#1e4e79] font-outfit font-medium text-[#1e4e79] text-base sm:text-lg bg-transparent hover:bg-[#1e4e79] hover:text-white transition-all duration-200"
-            >
-              Learn More
-            </Button>
-          </div>
+              <Button
+                variant = "outline"
+                className="w-full sm:w-auto px-6 sm:px-8 py-4 sm:py-6 h-auto rounded-full border-2 border-[#1e4e79] font-outfit font-medium text-[#1e4e79] text-base sm:text-lg bg-transparent hover:bg-[#1e4e79] hover:text-white transition-all duration-200"
+              >
+                Learn More
+              </Button>
+            </div>
         </div>
       </section>
     </div>
