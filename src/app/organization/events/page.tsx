@@ -1,12 +1,12 @@
 "use client";
 
-import { Sidebar } from "@components/Organization/Sidebar";
+import { Sidebar, SIDEBAR_WIDTH } from "@components/Organization/Sidebar";
 
 export default function OrganizationEventsPage() {
   return (
-    <div className="min-h-screen bg-gray-50 flex pt-32">
+    <div className="min-h-screen bg-gray-50 flex">
       <Sidebar />
-      <div className="flex-1 p-8">
+      <div className="flex-1 p-4 sm:p-6 md:p-8 md:ml-[280px] pt-16 md:pt-8">
         <h1 className="font-outfit font-semibold text-[#1e4e79] text-4xl mb-8">
           Events
         </h1>

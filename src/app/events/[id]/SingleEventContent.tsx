@@ -165,7 +165,6 @@ export default function SingleEventContent({ event }: Props) {
         </div>
       </aside>
 
-      {/* You Might Also Like Section - Full width on desktop */}
       <section className="lg:col-span-3 mt-12 bg-white rounded-2xl shadow p-8">
         <h3 className="font-outfit font-semibold text-[#1e4e79] text-xl mb-6">You Might Also Like</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">

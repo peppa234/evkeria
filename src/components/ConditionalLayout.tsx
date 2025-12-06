@@ -9,6 +9,12 @@ export function ConditionalLayout({ children }: { children: React.ReactNode }) {
   
   const isAuthPage = pathname?.startsWith('/auth');
   const isProfilePage = pathname?.startsWith('/profile');
+  const isOrganizationPage = pathname?.startsWith('/organization');
+  
+  // Organization pages have their own layout
+  if (isOrganizationPage) {
+    return <>{children}</>;
+  }
   
   return (
     <>
