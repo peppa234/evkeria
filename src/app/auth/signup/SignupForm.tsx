@@ -70,7 +70,7 @@ export function SignUpForm() {
   }
 
   return (
-    <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+    <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 font-outfit">
       <div className="text-center mb-6">
         <h1 className="text-2xl font-bold text-[#1e3a5f] mb-2">Create Account</h1>
         <p className="text-gray-500 text-sm">Join Evkeria today</p>

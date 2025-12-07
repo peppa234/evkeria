@@ -50,7 +50,7 @@ export function Navbar() {
             <Image
               className="w-[70px] h-[70px] sm:w-[101px] sm:h-[101px] object-cover"
               alt="EV Logo"
-              src="/img.png"
+              src="/logo_white.svg"
               width={101}
               height={101}
             />
@@ -135,7 +135,7 @@ export function Navbar() {
               <Image
                 className="w-12 h-12 object-cover"
                 alt="EV Logo"
-                src="/img.png"
+                src="/logo_white.svg"
                 width={48}
                 height={48}
               />

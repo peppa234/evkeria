@@ -37,7 +37,7 @@ function SidebarContent({ navigationItems, onLinkClick }: SidebarContentProps) {
         <Image
           className="w-[78px] h-[78px]"
           alt="Evkeria Logo"
-          src="/img.png"
+          src="/logo_white.svg"
           width={78}
           height={78}
           priority

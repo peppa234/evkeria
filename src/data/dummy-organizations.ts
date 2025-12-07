@@ -12,7 +12,7 @@ export const dummyOrganizations: Organization[] = [
     id: 1,
     name: "Tech Innovation Hub",
     email: "contact@techhub.dz",
-    logo: "/img.png",
+    logo: "/logo_white.svg",
     description: "Leading technology innovation center in Algeria",
     eventsCount: 5,
   },

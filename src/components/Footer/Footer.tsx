@@ -84,24 +84,6 @@ export function Footer() {
           <p className="font-outfit font-normal text-white text-base">
             © 2025 Evkeria. All rights reserved.
           </p>
-
-          <div className="flex gap-8">
-            {socialIcons.map((social, index) => (
-              <a
-                key={index}
-                href="#"
-                className="w-6 h-6 hover:opacity-70 transition-opacity duration-200"
-              >
-                <Image
-                  className="w-full h-full"
-                  alt={social.alt}
-                  src={social.icon}
-                  width={24}
-                  height={24}
-                />
-              </a>
-            ))}
-          </div>
         </div>
       </div>
     </footer>
