@@ -188,8 +188,46 @@ export function EventEditDialog({ open, mode, onClose }: EventEditDialogProps) {
                 className="w-full h-full object-cover"
               />
             </div>
+          
+                      {/* Edit image icon over banner */}
+            <div className="relative">
+              {/* Hidden file input */}
+              <input
+                id="event-image-input"
+                type="file"
+                accept="image/*"
+                className="hidden"
+              />
 
-            
+             
+              <button
+                type="button"
+                onClick={() =>
+                  document.getElementById("event-image-input")?.click()
+                }
+                className="absolute -top-7 right-6 w-11 h-11 rounded-full bg-white shadow-md flex items-center justify-center"
+                aria-label="Change event image"
+              >
+                <span className="relative w-9 h-9 rounded-full bg-[#f5f7fb] flex items-center justify-center">
+                  <Image
+                    src="/edit-event-circle.png"
+                    alt=""
+                    width={36}
+                    height={36}
+                    className="absolute inset-0 w-full h-full"
+                  />
+                  <Image
+                    src="/edit-event-pen.png"
+                    alt="Edit image"
+                    width={18}
+                    height={18}
+                    className="relative w-[18px] h-[18px]"
+                  />
+                </span>
+              </button>
+            </div>
+
+
             <div className="mt-6 flex justify-end gap-4">
               <button
                 type="button"
