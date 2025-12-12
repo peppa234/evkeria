@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Sidebar, SIDEBAR_WIDTH } from "@components/organization/Sidebar";
 import { EventEditDialog } from "@components/organization/EventEditDialog";
-import { DeleteEventDialog } from "@components/organization/DeleteEventDialog";
+import { DeleteEventDialog } from "@components/organization/EventDeleteDialog";
 import { QuickActionButton } from "@components/organization/QuickActionButton";
 import { PlusIcon } from "lucide-react";
 
