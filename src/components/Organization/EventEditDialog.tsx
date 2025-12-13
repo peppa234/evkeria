@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import Image from "next/image";
-import { XIcon } from "lucide-react";
+import { XIcon, PencilIcon } from "lucide-react";
 
 interface EventEditDialogProps {
   open: boolean;
@@ -179,7 +179,7 @@ export function EventEditDialog({ open, mode, onClose }: EventEditDialogProps) {
             </div>
 
             
-            <div className="mt-4 overflow-hidden rounded-xl h-[140px]">
+            <div className="mt-4 relative overflow-hidden rounded-xl h-[140px]">
               <Image
                 src="/event.png" 
                 alt="Event banner"
@@ -187,9 +187,29 @@ export function EventEditDialog({ open, mode, onClose }: EventEditDialogProps) {
                 height={200}
                 className="w-full h-full object-cover"
               />
+              
+              {/* Edit image icon over banner */}
+              {/* Hidden file input */}
+              <input
+                id="event-image-input"
+                type="file"
+                accept="image/*"
+                className="hidden"
+              />
+
+              <button
+                type="button"
+                onClick={() =>
+                  document.getElementById("event-image-input")?.click()
+                }
+                className="absolute top-4 right-4 w-11 h-11 rounded-full bg-white shadow-md flex items-center justify-center hover:shadow-lg transition-shadow z-10 hover:bg-gray-50"
+                aria-label="Change event image"
+              >
+                <PencilIcon className="w-5 h-5 text-[#4fa3e3]" />
+              </button>
             </div>
 
-            
+
             <div className="mt-6 flex justify-end gap-4">
               <button
                 type="button"

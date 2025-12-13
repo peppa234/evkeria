@@ -1,6 +1,20 @@
 "use client";
 
+<<<<<<< HEAD
 import { Sidebar, SIDEBAR_WIDTH } from "@components/Organization/Sidebar";
+=======
+import { useState } from "react";
+import { Sidebar, SIDEBAR_WIDTH } from "@components/organization/Sidebar";
+import { EventEditDialog } from "@components/organization/EventEditDialog";
+import { DeleteEventDialog } from "@components/organization/EventDeleteDialog";
+import { QuickActionButton } from "@components/organization/QuickActionButton";
+import { PlusIcon } from "lucide-react";
+
+export default function EventsPage() {
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [editMode, setEditMode] = useState<"create" | "edit">("edit");
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+>>>>>>> 547311cd0a17d16eb5e4b5514232deef031fe2ec
 
 export default function OrganizationEventsPage() {
   return (
