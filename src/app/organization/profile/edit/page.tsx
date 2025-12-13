@@ -11,10 +11,10 @@ import { PencilIcon } from "lucide-react";
 export default function OrganizationProfileEditPage() {
   const router = useRouter();
 
-  // In a real app, you'd get the current organization from auth/context
+  
   const organization = dummyOrganizations[0];
 
-  // Form state - easy to connect to backend later
+  
   const [formData, setFormData] = useState({
     name: organization.name,
     email: organization.email,
@@ -30,11 +30,10 @@ export default function OrganizationProfileEditPage() {
   };
 
   const handleSave = async () => {
-    // TODO: Backend integration - send formData to API
-    // Example: await fetch('/api/organization/update', { method: 'POST', body: JSON.stringify(formData) })
+   
     console.log("Saving organization data:", formData);
 
-    // Navigate back to profile page
+    
     router.push("/organization/profile");
   };
 
@@ -55,9 +54,9 @@ export default function OrganizationProfileEditPage() {
             Modify your Profile
           </p>
 
-          {/* Edit Form Card */}
+          
           <div className="bg-white rounded-3xl shadow-[0px_8px_32px_rgba(0,0,0,0.12)] p-8 max-w-xl mx-auto">
-            {/* Logo Section */}
+            
             <div className="flex flex-col items-center mb-8">
               <div className="w-[85px] h-[85px] rounded-full bg-white shadow-[-2px_4px_4px_-3px_rgba(0,0,0,0.06)] overflow-hidden flex items-center justify-center mb-2">
                 <Image
@@ -79,7 +78,7 @@ export default function OrganizationProfileEditPage() {
               </button>
             </div>
 
-            {/* Organization Name */}
+            
             <div className="mb-6">
               <label className="block font-outfit font-medium text-sm text-[#1F2937] mb-2">
                 Organization Name
@@ -94,7 +93,7 @@ export default function OrganizationProfileEditPage() {
               />
             </div>
 
-            {/* Email Address */}
+            
             <div className="mb-6">
               <label className="block font-outfit font-medium text-sm text-[#1F2937] mb-2">
                 Email Address
@@ -109,7 +108,7 @@ export default function OrganizationProfileEditPage() {
               />
             </div>
 
-            {/* Description */}
+            
             <div className="mb-8">
               <label className="block font-outfit font-medium text-sm text-[#1F2937] mb-2">
                 Description
@@ -124,7 +123,7 @@ export default function OrganizationProfileEditPage() {
               />
             </div>
 
-            {/* Action Buttons */}
+            
             <div className="flex flex-col gap-3">
               <Button
                 onClick={handleSave}

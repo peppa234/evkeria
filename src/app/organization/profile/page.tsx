@@ -13,13 +13,12 @@ import { dummyOrganizations } from "@data/dummy-organizations";
 import { PencilIcon, XIcon } from "lucide-react";
 
 export default function OrganizationProfilePage() {
-  // In a real app, you'd get the current organization from auth/context
-  // For now, using the first organization from dummy data
+ 
   const organization = dummyOrganizations[0];
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  // Form state - easy to connect to backend later
+  
   const [formData, setFormData] = useState({
     name: organization.name,
     email: organization.email,
@@ -35,16 +34,15 @@ export default function OrganizationProfilePage() {
   };
 
   const handleSave = async () => {
-    // TODO: Backend integration - send formData to API
-    // Example: await fetch('/api/organization/update', { method: 'POST', body: JSON.stringify(formData) })
+ 
     console.log("Saving organization data:", formData);
 
-    // Close modal
+    
     setIsEditModalOpen(false);
   };
 
   const handleCancel = () => {
-    // Reset form data to original values
+    
     setFormData({
       name: organization.name,
       email: organization.email,
@@ -75,36 +73,37 @@ export default function OrganizationProfilePage() {
           </button>
         </header>
 
-        {/* Organization Header with logo and description */}
+        
         <OrganizationHeader
           name={organization.name}
           type={organization.type}
           description={organization.description}
           logoUrl={organization.logo}
           email={organization.email}
+          onEditClick={() => setIsEditModalOpen(true)}
         />
 
-        {/* Fields Section */}
+        
         <FieldsSection initialFields={organization.fields} />
 
-        {/* Opportunities Section */}
+        
         <OpportunitiesSection
           initialOpportunities={organization.opportunities}
         />
 
-        {/* Links Section */}
+        
         <LinksSection
           email={organization.email}
           websiteUrl={organization.websiteUrl}
         />
       </main>
 
-      {/* Edit Modal Overlay */}
+      
       {isEditModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          {/* Modal Container - 764px x 750px */}
+          
           <div className="relative w-[764px] h-[750px] bg-white shadow-[0px_8px_32px_rgba(0,0,0,0.08)] rounded-[24px]">
-            {/* Logo Section - 100px circle */}
+            
             <div className="absolute left-1/2 top-8 -translate-x-1/2 flex flex-col items-center">
               <div className="relative w-[100px] h-[100px] rounded-full bg-gradient-to-r from-[#3B82F6] to-[#1E4E79] shadow-[0px_4px_6px_rgba(0,0,0,0.1),0px_10px_15px_rgba(0,0,0,0.1)] overflow-hidden flex items-center justify-center">
                 <Image
@@ -123,7 +122,7 @@ export default function OrganizationProfilePage() {
               </button>
             </div>
 
-            {/* Organization Name */}
+            
             <div className="absolute left-[73px] top-[195px] w-[608px]">
               <label className="block font-outfit font-medium text-[14px] leading-[20px] text-[#374151] mb-2">
                 Organization Name
@@ -138,7 +137,7 @@ export default function OrganizationProfilePage() {
               />
             </div>
 
-            {/* Email Address */}
+            
             <div className="absolute left-[73px] top-[285px] w-[608px]">
               <label className="block font-outfit font-medium text-[14px] leading-[20px] text-[#374151] mb-2">
                 Email Address
@@ -153,7 +152,7 @@ export default function OrganizationProfilePage() {
               />
             </div>
 
-            {/* Description */}
+            
             <div className="absolute left-[73px] top-[375px] w-[608px]">
               <label className="block font-outfit font-medium text-[14px] leading-[20px] text-[#374151] mb-2">
                 Description
@@ -167,7 +166,7 @@ export default function OrganizationProfilePage() {
               />
             </div>
 
-            {/* Save Changes Button */}
+            
             <button
               onClick={handleSave}
               className="absolute left-[78px] top-[535px] w-[608px] h-[60px] flex items-center justify-center bg-[#1E4E79] shadow-[0px_4px_6px_rgba(0,0,0,0.1)] rounded-[19px] hover:bg-[#163a5c] transition-colors"
@@ -177,7 +176,7 @@ export default function OrganizationProfilePage() {
               </span>
             </button>
 
-            {/* Cancel Button */}
+            
             <button
               onClick={handleCancel}
               className="absolute left-[78px] top-[615px] w-[608px] h-[50px] flex items-center justify-center border border-[#E5E7EB] rounded-[19px] hover:bg-gray-50 transition-colors"

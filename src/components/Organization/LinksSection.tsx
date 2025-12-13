@@ -17,7 +17,7 @@ export function LinksSection({
 
   useEffect(() => {
     if (websiteUrl) {
-      // Extract title from URL (domain-based)
+      
       const title = getDomainAsTitle(websiteUrl);
       setWebsiteTitle(title);
     }
@@ -35,9 +35,9 @@ export function LinksSection({
         </div>
       </div>
 
-      {/* Content Section */}
+      
       <div className="px-10 py-6 space-y-2">
-        {/* Email */}
+        
         <div className="flex items-center gap-5">
           <MailIcon className="w-[30px] h-[30px] text-gray-700" />
           <a
@@ -48,7 +48,7 @@ export function LinksSection({
           </a>
         </div>
 
-        {/* Website */}
+        
         <div className="flex items-center gap-5">
           <GlobeIcon className="w-[30px] h-[30px] text-gray-700" />
           <a

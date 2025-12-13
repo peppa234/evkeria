@@ -31,7 +31,7 @@ export function FieldsSection({ initialFields = [] }: FieldsSectionProps) {
 
   return (
     <div className="bg-white rounded-[22px] mb-6 shadow-[0px_8px_32px_rgba(0,0,0,0.08)]">
-      {/* Header Section with colored background */}
+      
       <div className="bg-[#F0F7FF] rounded-t-[15px] px-6 py-4">
         <div className="flex items-center gap-2">
           <ZapIcon className="w-5 h-5 text-gray-800" />
@@ -41,7 +41,7 @@ export function FieldsSection({ initialFields = [] }: FieldsSectionProps) {
         </div>
       </div>
 
-      {/* Content Section */}
+      
       <div className="px-6 py-6">
         <div className="flex flex-wrap gap-2 mb-4">
           {fields.map((field, index) => (

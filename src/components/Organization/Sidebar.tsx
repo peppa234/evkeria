@@ -118,12 +118,12 @@ export function Sidebar() {
     setIsMobileMenuOpen(false);
   };
 
-  // Close mobile menu when route changes
+  
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
-  // Prevent body scroll when mobile menu is open
+  
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -137,7 +137,7 @@ export function Sidebar() {
 
   return (
     <>
-      {/* Mobile Hamburger Button */}
+      
       <button
         onClick={toggleMobileMenu}
         className="md:hidden fixed top-4 right-4 z-50 p-2 rounded-lg bg-[#1e4e79] text-white shadow-lg hover:bg-[#4fa3e3] transition-colors"
@@ -151,7 +151,7 @@ export function Sidebar() {
         )}
       </button>
 
-      {/* Mobile Overlay */}
+      
       {isMobileMenuOpen && (
         <div
           className="md:hidden fixed inset-0 bg-black/50 z-40 transition-opacity"
@@ -160,7 +160,7 @@ export function Sidebar() {
         />
       )}
 
-      {/* Desktop Sidebar */}
+      
       <aside
         className="hidden md:flex w-[280px] h-screen fixed left-0 top-0 shadow-lg bg-[#1e4e79] flex-col z-10"
         aria-label="Organization navigation sidebar"
@@ -168,7 +168,7 @@ export function Sidebar() {
         <SidebarContent navigationItems={navigationItems} />
       </aside>
 
-      {/* Mobile Sidebar */}
+      
       <aside
         className={cn(
           "md:hidden fixed top-0 right-0 w-[280px] h-screen shadow-lg bg-[#1e4e79] flex-col z-50 transform transition-transform duration-300 ease-in-out flex",
