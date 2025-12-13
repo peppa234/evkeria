@@ -105,8 +105,8 @@ export function Sidebar() {
     {
       icon: UserIcon,
       label: "Profile",
-      href: "/profile",
-      active: pathname === "/profile",
+      href: "/organization/profile",
+      active: pathname === "/organization/profile",
     },
   ];
 

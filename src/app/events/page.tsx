@@ -11,7 +11,7 @@ export default function EventsPage() {
   const { searchQuery, setSearchQuery, filteredEvents } =
     useSearch(dummyEvents);
 
-  // Filters (local)
+  
   const [queryInput, setQueryInput] = useState("");
   const [wilaya, setWilaya] = useState<string>("");
   const [type, setType] = useState<string>("");
