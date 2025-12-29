@@ -12,7 +12,7 @@ export function SavedOpportunities() {
   };
 
   return (
-    <section className="max-w-full sm:max-w-2xl md:max-w-4xl lg:max-w-5xl mx-auto mt-6 sm:mt-8 px-4 sm:px-6">
+    <section className="w-full">
       <div className="rounded-2xl sm:rounded-3xl bg-white shadow-lg overflow-hidden">
         <div className="flex items-center gap-2 bg-[#FDF7E8] px-4 sm:px-6 md:px-8 py-3 sm:py-4 border-b border-[#F1E2BF]">
           <Image

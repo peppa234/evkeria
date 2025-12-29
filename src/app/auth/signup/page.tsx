@@ -1,6 +1,5 @@
 import Image from "next/image"
 
-import { Navbar } from "@components/Navbar/Navbar"
 import { SignUpForm } from "./SignupForm"
 
 export default function SignUpPage() {

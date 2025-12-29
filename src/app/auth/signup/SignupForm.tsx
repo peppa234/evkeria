@@ -63,7 +63,6 @@ export function SignUpForm() {
     if (!validateForm()) return
 
     setIsLoading(true)
-    // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1500))
     setIsLoading(false)
     console.log("Sign up attempted with:", { fullName, email, password })
@@ -204,32 +203,6 @@ export function SignUpForm() {
           >
             Sign In
           </Link>
-        </div>
-
-        <div className="flex items-center justify-center gap-2 text-xs text-gray-400 pt-2">
-          <button
-            type="button"
-            onClick={() => console.log("Privacy Policy")}
-            className="hover:text-gray-600 transition-colors"
-          >
-            Privacy Policy
-          </button>
-          <span>•</span>
-          <button
-            type="button"
-            onClick={() => console.log("Terms of Service")}
-            className="hover:text-gray-600 transition-colors"
-          >
-            Terms of Service
-          </button>
-          <span>•</span>
-          <button
-            type="button"
-            onClick={() => console.log("Support")}
-            className="hover:text-gray-600 transition-colors"
-          >
-            Support
-          </button>
         </div>
       </form>
     </div>

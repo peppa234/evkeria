@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Badge } from "@components/ui/badge";
 import { Button } from "@components/ui/button";
 import { Card, CardContent } from "@components/ui/card";
+import { useRef } from "react";
 
 const featuredOpportunities = [
   {
@@ -74,9 +75,13 @@ const whyEvkeriaFeatures = [
 ];
 
 export default function HomePage() {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="bg-white w-full overflow-x-hidden">
-      <section className="relative min-h-screen overflow-hidden">
+      <section className="hero-section relative min-h-screen overflow-hidden">
         <Image
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
           alt="Hero background"
@@ -89,11 +94,12 @@ export default function HomePage() {
 
         <div className="absolute inset-0 bg-gradient-to-r from-[rgba(55,144,223,0.43)] to-[rgba(30,78,121,0.43)] transition-opacity duration-500" />
 
-        <div className="absolute -left-1/4 top-3/4 w-[800px] h-[400px] bg-[#4fa3e3a1] rounded-full blur-[150px] opacity-60 animate-pulse" />
+        {/* Blur effect - contained within hero */}
+        <div className="absolute -left-1/4 top-3/4 w-[800px] h-[400px] bg-[#4fa3e3a1] rounded-full blur-[150px] opacity-60 animate-pulse pointer-events-none" />
 
-        <div className="relative z-10 flex items-center min-h-screen px-4 sm:px-6 md:px-8 lg:px-16 xl:px-32">
+        <div className="hero-content relative z-10 flex items-center min-h-screen px-4 sm:px-6 md:px-8 lg:px-16 xl:px-32 pt-[90px] sm:pt-[100px] lg:pt-0">
           <div className="max-w-3xl w-full animate-fade-in">
-            <h1 className="font-outfit font-semibold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-tight mb-6 sm:mb-8 animate-slide-up">
+            <h1 className="hero-title font-outfit font-semibold text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[96px] 2xl:text-[110px] leading-tight mb-4 xs:mb-6 sm:mb-8 animate-slide-up">
               <span className="text-white">
                 Discover, Network <br />
                 &amp;{" "}
@@ -102,20 +108,20 @@ export default function HomePage() {
               <span className="text-white">.</span>
             </h1>
 
-            <p className="font-outfit font-normal text-white text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-relaxed mb-8 sm:mb-10 lg:mb-12 animate-slide-up delay-100">
+            <p className="hero-subtitle font-outfit font-normal text-white text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-[42px] leading-relaxed mb-4 xs:mb-6 sm:mb-10 lg:mb-12 animate-slide-up delay-100">
               Explore volunteering, events, trainings, and exchange programs across
               Algeria — all in one place.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 animate-slide-up delay-200">
+            <div className="hero-buttons flex flex-col sm:flex-row gap-2 xs:gap-3 sm:gap-4 animate-slide-up delay-200">
               <Link href="/events" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto px-6 sm:px-8 py-4 sm:py-6 h-auto rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-md border border-white/30 shadow-lg font-outfit font-medium text-white text-base sm:text-lg lg:text-xl hover:bg-[#1e4e79]/90 hover:border-[#1e4e79] hover:backdrop-blur-none hover:scale-105 active:scale-95 transition-all duration-300 ease-out">
+                <Button className="w-full sm:w-auto px-4 xs:px-6 sm:px-8 py-2 xs:py-3 sm:py-6 h-auto rounded-lg xs:rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-md border border-white/30 shadow-lg font-outfit font-medium text-white text-xs xs:text-sm sm:text-base lg:text-lg xl:text-xl hover:bg-[#1e4e79]/90 hover:border-[#1e4e79] hover:backdrop-blur-none hover:scale-105 active:scale-95 transition-all duration-300 ease-out">
                   Browse Events
                 </Button>
               </Link>
 
               <Link href="/auth/signup" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto px-6 sm:px-8 py-4 sm:py-6 h-auto rounded-xl sm:rounded-2xl bg-gradient-to-r from-[#4fa3e3] to-[#6fb3e6] font-outfit font-medium text-white text-base sm:text-lg lg:text-xl hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 ease-out">
+                <Button className="w-full sm:w-auto px-4 xs:px-6 sm:px-8 py-2 xs:py-3 sm:py-6 h-auto rounded-lg xs:rounded-xl sm:rounded-2xl bg-gradient-to-r from-[#4fa3e3] to-[#6fb3e6] font-outfit font-medium text-white text-xs xs:text-sm sm:text-base lg:text-lg xl:text-xl hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 ease-out">
                   Register Now
                 </Button>
               </Link>
@@ -139,7 +145,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="py-12 sm:py-16 lg:py-20 bg-white">
+      <section className="relative z-10 py-12 sm:py-16 lg:py-20 bg-white isolate">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
           <h2 className="font-outfit font-semibold text-[#1e4e79] text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-center mb-4 sm:mb-6">
             Featured Opportunities
@@ -217,10 +223,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="relative py-16 sm:py-24 md:py-32 lg:py-40 bg-[#1e4e79] overflow-hidden">
-        <div className="absolute -top-16 sm:-top-32 left-0 right-0 h-32 sm:h-64 bg-white rounded-[50%] transform -translate-y-1/2" />
+      <section className="relative py-16 sm:py-24 md:py-32 lg:py-40 bg-[#1e4e79] overflow-hidden isolate">
+        {/* Top curved transition - contained within section */}
+        <div className="absolute -top-16 sm:-top-32 left-0 right-0 h-32 sm:h-64 bg-white rounded-[50%] transform -translate-y-1/2 pointer-events-none" />
 
-        <div className="absolute inset-0 overflow-hidden">
+        {/* Blur effect container */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -left-1/4 top-1/2 w-[400px] sm:w-[600px] lg:w-[800px] h-[200px] sm:h-[300px] lg:h-[400px] bg-[#4fa3e385] rounded-full blur-[100px] sm:blur-[150px] opacity-60" />
         </div>
 
@@ -263,11 +271,12 @@ export default function HomePage() {
         <div className="absolute -bottom-16 sm:-bottom-32 left-0 right-0 h-32 sm:h-64 bg-white rounded-[50%] transform translate-y-1/2" />
       </section>
 
-      <section className="relative py-16 sm:py-24 md:py-32 lg:py-40 bg-white overflow-hidden">
-        <div className="absolute -top-10 sm:-top-20 -left-10 sm:-left-20 w-48 sm:w-96 h-48 sm:h-96 bg-[#8cc2eb] rounded-full blur-[80px] sm:blur-[120px] opacity-30 pointer-events-none" />
-        <div className="absolute -top-10 sm:-top-20 -right-10 sm:-right-20 w-48 sm:w-96 h-48 sm:h-96 bg-[#8cc2eb] rounded-full blur-[80px] sm:blur-[120px] opacity-30 pointer-events-none" />
-        <div className="absolute top-1/2 -left-16 sm:-left-32 w-40 sm:w-80 h-40 sm:h-80 bg-[#4fa3e3] rounded-full blur-[60px] sm:blur-[100px] opacity-20 pointer-events-none" />
-        <div className="absolute top-1/2 -right-16 sm:-right-32 w-40 sm:w-80 h-40 sm:h-80 bg-[#4fa3e3] rounded-full blur-[60px] sm:blur-[100px] opacity-20 pointer-events-none" />
+      <section className="relative py-16 sm:py-24 md:py-32 lg:py-40 bg-white overflow-hidden isolate">
+        {/* Decorative blur effects - contained within section */}
+        <div className="absolute top-0 left-0 w-48 sm:w-96 h-48 sm:h-96 bg-[#8cc2eb] rounded-full blur-[80px] sm:blur-[120px] opacity-30 pointer-events-none -translate-x-1/2 -translate-y-1/4" />
+        <div className="absolute top-0 right-0 w-48 sm:w-96 h-48 sm:h-96 bg-[#8cc2eb] rounded-full blur-[80px] sm:blur-[120px] opacity-30 pointer-events-none translate-x-1/2 -translate-y-1/4" />
+        <div className="absolute top-1/2 left-0 w-40 sm:w-80 h-40 sm:h-80 bg-[#4fa3e3] rounded-full blur-[60px] sm:blur-[100px] opacity-20 pointer-events-none -translate-x-1/2" />
+        <div className="absolute top-1/2 right-0 w-40 sm:w-80 h-40 sm:h-80 bg-[#4fa3e3] rounded-full blur-[60px] sm:blur-[100px] opacity-20 pointer-events-none translate-x-1/2" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
           <h2 className="font-outfit font-semibold text-[#1e4e79] text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-center mb-4 sm:mb-6">
@@ -304,16 +313,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="relative py-12 sm:py-16 lg:py-20 bg-white overflow-hidden">
-        <div className="absolute -right-1/4 top-1/2 w-[400px] sm:w-[600px] lg:w-[800px] h-[200px] sm:h-[300px] lg:h-[400px] bg-[#4fa3e370] rounded-full blur-[100px] sm:blur-[150px] opacity-60" />
-        
-        <Image
-          className="hidden sm:block absolute top-10 sm:top-20 right-16 sm:right-32 w-10 h-10 sm:w-14 sm:h-14 opacity-20"
-          alt="Decorative icon"
-          src="/frame-7.svg"
-          width={56}
-          height={56}
-        />
+      <section className="relative py-12 sm:py-16 lg:py-20 bg-white overflow-hidden isolate">
+        {/* Decorative blur - contained */}
+        <div className="absolute right-0 top-1/2 w-[400px] sm:w-[600px] lg:w-[800px] h-[200px] sm:h-[300px] lg:h-[400px] bg-[#4fa3e370] rounded-full blur-[100px] sm:blur-[150px] opacity-60 translate-x-1/2 pointer-events-none" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 md:px-8 lg:px-16 text-center">
           <h2 className="font-outfit font-semibold text-[#1e4e79] text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6">
@@ -333,8 +335,9 @@ export default function HomePage() {
               </Link>
 
               <Button
+                onClick={scrollToTop}
                 variant = "outline"
-                className="w-full sm:w-auto px-6 sm:px-8 py-4 sm:py-6 h-auto rounded-full border-2 border-[#1e4e79] font-outfit font-medium text-[#1e4e79] text-base sm:text-lg bg-transparent hover:bg-[#1e4e79] hover:text-white transition-all duration-200"
+                className="w-full sm:w-auto px-6 sm:px-8 py-4 sm:py-6 h-auto rounded-full border-2 border-[#1e4e79] font-outfit font-medium text-[#1e4e79] text-base sm:text-lg bg-transparent hover:bg-[#1e4e79] hover:text-white transition-all duration-200 cursor-pointer"
               >
                 Learn More
               </Button>

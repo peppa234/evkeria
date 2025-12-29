@@ -76,7 +76,7 @@ export default function EventsPage() {
   return (
     <div className="bg-white w-full overflow-x-hidden">
  
-      <section className="relative min-h-screen overflow-hidden">
+      <section className="hero-section relative min-h-screen overflow-hidden">
         <Image
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
           alt="Hero background"
@@ -89,22 +89,22 @@ export default function EventsPage() {
 
         <div className="absolute inset-0 bg-gradient-to-r from-[rgba(55,144,223,0.35)] to-[rgba(30,78,121,0.35)]" />
 
-        <div className="relative z-10 flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-16">
+        <div className="hero-content relative z-10 flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-16 pt-[90px] sm:pt-[100px] lg:pt-0">
           <div className="w-full max-w-4xl xl:max-w-[1031px] text-center animate-fade-in">
             <h1
-              className="font-outfit font-semibold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[96px] leading-tight sm:leading-normal lg:leading-[121px] text-white mx-auto animate-slide-up"
+              className="hero-title font-outfit font-semibold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[96px] 2xl:text-[110px] leading-tight sm:leading-normal lg:leading-[121px] text-white mx-auto animate-slide-up"
               style={{
                 textShadow: "0px 4px 54.7px rgba(79, 163, 227, 0.63)",
               }}
             >
               Discover Opportunities
             </h1>
-            <p className="font-outfit font-normal text-base sm:text-lg md:text-xl lg:text-2xl xl:text-[24px] leading-relaxed text-white text-center mt-4 sm:mt-6 mx-auto max-w-3xl animate-slide-up delay-100">
+            <p className="hero-subtitle font-outfit font-normal text-base sm:text-lg md:text-xl lg:text-2xl xl:text-[28px] 2xl:text-[32px] leading-relaxed text-white text-center mt-4 sm:mt-6 mx-auto max-w-3xl animate-slide-up delay-100">
               Find events, volunteering programs, and learning experiences
               across Algeria.
             </p>
 
-            <div className="flex gap-4 animate-slide-up delay-200"></div>
+            <div className="hero-buttons flex gap-4 animate-slide-up delay-200"></div>
           </div>
         </div>
 
@@ -124,7 +124,7 @@ export default function EventsPage() {
         </div>
       </section>
 
-      <section className="py-16 bg-white">
+      <section id="events-section" className="relative z-10 py-16 bg-white isolate">
         <div className="max-w-7xl mx-auto px-8 lg:px-16">
           <SearchBar
             queryInput={queryInput}

@@ -1,9 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Badge } from "@components/ui/badge";
-import { Card, CardContent } from "@components/ui/card";
-import { EventCard } from "@components/EventCard/EventCard";
 import SingleEventContent from "./SingleEventContent";
 import { dummyEvents, type Event } from "@data/dummy-events";
 
@@ -30,7 +26,7 @@ export default function EventPage({ params }: Props) {
   return (
     <div className="bg-white min-h-screen">
       {/* Hero */}
-      <div className="relative w-full h-96 lg:h-[520px]">
+      <div className="relative w-full min-h-[320px] h-auto lg:min-h-[520px]">
         <Image
           src={event!.image}
           alt={event!.title}
@@ -39,27 +35,27 @@ export default function EventPage({ params }: Props) {
           priority
         />
         <div className="absolute inset-0 bg-[linear-gradient(270deg,rgba(55,144,223,0.49)_0%,rgba(30,78,121,0.49)_56%)]" />
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-16 pt-28 lg:pt-44 pb-10 lg:pb-20">
-          <div className="flex flex-col lg:flex-row items-start gap-8">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-16 pt-[100px] sm:pt-[120px] lg:pt-44 pb-8 lg:pb-20">
+          <div className="flex flex-col lg:flex-row items-start gap-6 lg:gap-8">
             <div className="lg:flex-1 text-white">
-              <h1 className="font-outfit font-bold text-3xl lg:text-5xl leading-tight mb-2">
+              <h1 className="hero-title font-outfit font-bold text-2xl sm:text-3xl lg:text-5xl leading-tight mb-2">
                 {event!.title}
               </h1>
-              <p className="text-sm lg:text-base font-outfit text-[rgba(255,255,255,0.95)] mb-4">
+              <p className="hero-subtitle text-sm lg:text-base font-outfit text-[rgba(255,255,255,0.95)] mb-3 lg:mb-4">
                 Organized by {event!.organization}
               </p>
 
-              <div className="flex items-center gap-3 flex-wrap mt-8">
-                <div className="flex items-center gap-2 h-9 bg-[#f0f8ff] rounded-full px-3">
+              <div className="flex items-center gap-2 sm:gap-3 flex-wrap mt-4 sm:mt-6 lg:mt-8">
+                <div className="flex items-center gap-2 h-8 sm:h-9 bg-[#f0f8ff] rounded-full px-2 sm:px-3">
                   <Image src="/frame-3.svg" alt="location" width={16} height={16} />
-                  <span className="text-[#1e4e79] text-sm">{event!.location}</span>
+                  <span className="text-[#1e4e79] text-xs sm:text-sm">{event!.location}</span>
                 </div>
-                <div className="flex items-center gap-2 h-9 bg-[#f0f8ff] rounded-full px-3">
+                <div className="flex items-center gap-2 h-8 sm:h-9 bg-[#f0f8ff] rounded-full px-2 sm:px-3">
                   <Image src="/frame-4.svg" alt="date" width={16} height={16} />
-                  <span className="text-[#1e4e79] text-sm">{event!.date}</span>
+                  <span className="text-[#1e4e79] text-xs sm:text-sm">{event!.date}</span>
                 </div>
-                <div className="flex items-center gap-2 h-9 bg-[#f0f8ff] rounded-full px-3">
-                  <span className="text-[#1e4e79] text-sm">{event!.category}</span>
+                <div className="flex items-center gap-2 h-8 sm:h-9 bg-[#f0f8ff] rounded-full px-2 sm:px-3">
+                  <span className="text-[#1e4e79] text-xs sm:text-sm">{event!.category}</span>
                 </div>
               </div>
             </div>

@@ -1,6 +1,5 @@
 import Image from "next/image"
 import { LoginForm } from "./LoginOrgForm"
-import { Navbar } from "@components/Navbar/Navbar"
 
 export default function LoginPage() {
   return (

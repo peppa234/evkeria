@@ -60,6 +60,9 @@ module.exports = {
         ],
         outfit: ['"Outfit"', 'sans-serif'],
       },
+      screens: {
+        xs: '380px',
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

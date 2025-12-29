@@ -30,14 +30,19 @@ export function QuickActionButton({
     <Button
       variant={variant === "outline" ? "outline" : "default"}
       className={cn(
-        "rounded-xl font-outfit font-medium text-base",
+        "w-full justify-start rounded-xl font-outfit font-medium text-sm transition-all duration-200",
         variant === "primary"
-          ? "bg-[#4fa3e3] hover:bg-[#4fa3e3]/90 text-white h-[57px] px-6"
-          : "bg-gray-50 hover:bg-gray-100 text-[#0e1f35] h-[53px] px-6 border"
+          ? "bg-[#4fa3e3] hover:bg-[#3d8bc7] text-white h-12 px-4 shadow-sm"
+          : "bg-gray-50 hover:bg-gray-100 text-[#0e1f35] h-12 px-4 border border-gray-200"
       )}
       onClick={handleClick}
     >
-      <Icon className="w-5 h-5 mr-2" />
+      <div className={cn(
+        "w-8 h-8 rounded-lg flex items-center justify-center mr-3 flex-shrink-0",
+        variant === "primary" ? "bg-white/20" : "bg-white"
+      )}>
+        <Icon className="w-4 h-4" />
+      </div>
       {label}
     </Button>
   );
@@ -47,9 +52,8 @@ export function QuickActionButton({
   }
 
   return (
-    <Link href={href}>
+    <Link href={href} className="block">
       {buttonContent}
     </Link>
   );
 }
-

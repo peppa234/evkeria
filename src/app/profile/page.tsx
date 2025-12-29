@@ -1,15 +1,18 @@
 "use client";
 
+import { useState } from "react";
 import { useProfile } from "@components/Profile/ProfileContext";
 import { ProfileHeader } from "@components/Profile/ProfileHeader";
 import { SkillsSection } from "@components/Profile/SkillsSection";
 import { InterestsSection } from "@components/Profile/InterestsSection";
 import { SavedOpportunities } from "@components/Profile/SavedOpportunities";
+import { EditProfileDialog } from "@components/Profile/EditProfileDialog";
 
 export const dynamic = "force-dynamic";
 
 export default function ProfilePage() {
   const { profile, setProfile } = useProfile();
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
   const addSkill = (skill: string) => {
     if (!skill || profile.skills.includes(skill)) return;
@@ -39,23 +42,32 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="pb-12 sm:pb-16 md:pb-24 pt-20 sm:pt-32 md:pt-40">
-      <ProfileHeader
-        name={profile.name}
-        email={profile.email}
-        bio={profile.bio}
+    <>
+      {/* Shared container - all sections align to this */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 sm:pt-32 md:pt-36 pb-12 sm:pb-16 flex flex-col gap-6">
+        <ProfileHeader
+          name={profile.name}
+          email={profile.email}
+          bio={profile.bio}
+          onEditClick={() => setIsEditDialogOpen(true)}
+        />
+        <SavedOpportunities />
+        <SkillsSection
+          skills={profile.skills}
+          onAddSkill={addSkill}
+          onRemoveSkill={removeSkill}
+        />
+        <InterestsSection
+          interests={profile.interests}
+          onAddInterest={addInterest}
+          onRemoveInterest={removeInterest}
+        />
+      </div>
+
+      <EditProfileDialog
+        isOpen={isEditDialogOpen}
+        onClose={() => setIsEditDialogOpen(false)}
       />
-      <SavedOpportunities />
-      <SkillsSection
-        skills={profile.skills}
-        onAddSkill={addSkill}
-        onRemoveSkill={removeSkill}
-      />
-      <InterestsSection
-        interests={profile.interests}
-        onAddInterest={addInterest}
-        onRemoveInterest={removeInterest}
-      />
-    </div>
+    </>
   );
 }

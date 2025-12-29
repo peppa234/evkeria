@@ -7,7 +7,7 @@ const footerSections = [
     links: [
       { label: "About Us", href: "/about" },
       { label: "Our Story", href: "/about" },
-      { label: "Contact", href: "/contact" },
+      { label: "Get in Touch", href: "/about#contact" },
     ],
   },
   {
@@ -23,14 +23,7 @@ const footerSections = [
     links: [
       { label: "Create an Account", href: "/auth/organization/signup" },
       { label: "Login", href: "/auth/organization/login" },
-      { label: "Publish an Event", href: "/organization/events/create" },
-    ],
-  },
-  {
-    title: "Legal",
-    links: [
-      { label: "Terms & Conditions", href: "/terms" },
-      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Dashboard", href: "/organization/dashboard" },
     ],
   },
 ];
@@ -43,7 +36,7 @@ const socialIcons = [
 
 export function Footer() {
   return (
-    <footer className="bg-[#1e4e79] py-16">
+    <footer id="footer" className="bg-[#1e4e79] py-16">
       <div className="max-w-7xl mx-auto px-8 lg:px-16">
         <div className="mb-12">
           <Image
@@ -55,7 +48,7 @@ export function Footer() {
           />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 mb-12">
           {footerSections.map((section, sectionIndex) => (
             <div key={sectionIndex}>
               {section.title && (
