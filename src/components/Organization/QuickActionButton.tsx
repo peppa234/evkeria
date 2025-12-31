@@ -30,7 +30,7 @@ export function QuickActionButton({
     <Button
       variant={variant === "outline" ? "outline" : "default"}
       className={cn(
-        "w-full justify-start rounded-xl font-outfit font-medium text-sm transition-all duration-200",
+        "w-full justify-start rounded-xl font-outfit font-medium text-sm transition-all duration-200 min-w-0",
         variant === "primary"
           ? "bg-[#4fa3e3] hover:bg-[#3d8bc7] text-white h-12 px-4 shadow-sm"
           : "bg-gray-50 hover:bg-gray-100 text-[#0e1f35] h-12 px-4 border border-gray-200"
@@ -43,7 +43,7 @@ export function QuickActionButton({
       )}>
         <Icon className="w-4 h-4" />
       </div>
-      {label}
+      <span className="truncate min-w-0 flex-1">{label}</span>
     </Button>
   );
 

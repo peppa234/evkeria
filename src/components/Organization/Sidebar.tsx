@@ -15,6 +15,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@components/ui/button";
 import { cn } from "@lib/utils";
+import { useOrganizationAuth } from "@context/OrganizationAuthContext";
 
 interface NavigationItem {
   icon: LucideIcon;
@@ -28,9 +29,10 @@ const SIDEBAR_WIDTH = 280;
 interface SidebarContentProps {
   navigationItems: NavigationItem[];
   onLinkClick?: () => void;
+  onLogout: () => void;
 }
 
-function SidebarContent({ navigationItems, onLinkClick }: SidebarContentProps) {
+function SidebarContent({ navigationItems, onLinkClick, onLogout }: SidebarContentProps) {
   return (
     <>
       <div className="p-6 pb-8">
@@ -71,16 +73,15 @@ function SidebarContent({ navigationItems, onLinkClick }: SidebarContentProps) {
 
       <div className="px-6 pb-8 pt-4">
         <div className="w-full h-px bg-[#b8d4f0]/30 mb-6" aria-hidden="true" />
-        <Link href="/auth/organization/login" onClick={onLinkClick}>
-          <Button
-            variant="ghost"
-            className="w-full justify-start text-[#b8d4f0] hover:bg-red-500/20 hover:text-red-300 hover:translate-x-1 font-outfit font-medium text-base transition-all duration-200"
-            aria-label="Logout"
-          >
-            <LogOutIcon className="w-5 h-5" aria-hidden="true" />
-            <span className="ml-3">Logout</span>
-          </Button>
-        </Link>
+        <Button
+          variant="ghost"
+          onClick={onLogout}
+          className="w-full justify-start text-[#b8d4f0] hover:bg-red-500/20 hover:text-red-300 hover:translate-x-1 font-outfit font-medium text-base transition-all duration-200"
+          aria-label="Logout"
+        >
+          <LogOutIcon className="w-5 h-5" aria-hidden="true" />
+          <span className="ml-3">Logout</span>
+        </Button>
       </div>
     </>
   );
@@ -89,6 +90,7 @@ function SidebarContent({ navigationItems, onLinkClick }: SidebarContentProps) {
 export function Sidebar() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { logout } = useOrganizationAuth();
 
   const navigationItems: NavigationItem[] = [
     {
@@ -119,6 +121,11 @@ export function Sidebar() {
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
+  };
+
+  const handleLogout = () => {
+    closeMobileMenu();
+    logout();
   };
 
   useEffect(() => {
@@ -163,7 +170,7 @@ export function Sidebar() {
         className="hidden md:flex w-[280px] h-screen fixed left-0 top-0 shadow-lg bg-[#1e4e79] flex-col z-10"
         aria-label="Organization navigation sidebar"
       >
-        <SidebarContent navigationItems={navigationItems} />
+        <SidebarContent navigationItems={navigationItems} onLogout={handleLogout} />
       </aside>
 
       <aside
@@ -177,6 +184,7 @@ export function Sidebar() {
         <SidebarContent
           navigationItems={navigationItems}
           onLinkClick={closeMobileMenu}
+          onLogout={handleLogout}
         />
       </aside>
     </>

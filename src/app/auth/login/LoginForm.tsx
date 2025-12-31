@@ -1,51 +1,60 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState } from "react"
-import { Eye, EyeOff, Loader2 } from "lucide-react"
-import { Button } from "@components/ui/button"
-import Link from "next/link"
+import type React from "react";
+import { useState } from "react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { Button } from "@components/ui/button";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 export function LoginForm() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>({})
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<{ email?: string; password?: string; general?: string }>({});
+  
+  const router = useRouter();
+  const { login } = useAuth();
 
   const validateForm = () => {
-    const newErrors: { email?: string; password?: string } = {}
+    const newErrors: { email?: string; password?: string } = {};
 
     if (!email) {
-      newErrors.email = "Email is required"
+      newErrors.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      newErrors.email = "Please enter a valid email"
+      newErrors.email = "Please enter a valid email";
     }
 
     if (!password) {
-      newErrors.password = "Password is required"
+      newErrors.password = "Password is required";
     } else if (password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters"
+      newErrors.password = "Password must be at least 6 characters";
     }
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    if (!validateForm()) return
+    if (!validateForm()) return;
 
-    setIsLoading(true)
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    setIsLoading(false)
-    console.log("Login attempted with:", { email, password })
-  }
+    setIsLoading(true);
+    setErrors({});
 
-  const handleForgotPassword = () => {
-    console.log("Forgot password clicked")
-  }
+    const result = await login(email, password);
+
+    setIsLoading(false);
+
+    if (result.success) {
+      router.push("/profile");
+    } else {
+      setErrors({ general: result.error || "Login failed" });
+    }
+  };
 
   return (
     <div className="w-full max-w-md bg-white rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6 md:p-8 font-outfit">
@@ -53,6 +62,12 @@ export function LoginForm() {
         <h1 className="text-xl sm:text-2xl font-bold text-[#1e3a5f] mb-2">Welcome Back</h1>
         <p className="text-gray-500 text-xs sm:text-sm">Sign in to your account</p>
       </div>
+
+      {errors.general && (
+        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+          <p className="text-red-600 text-sm text-center">{errors.general}</p>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
         <div className="space-y-2">
@@ -65,8 +80,8 @@ export function LoginForm() {
             placeholder="Enter your email"
             value={email}
             onChange={(e) => {
-              setEmail(e.target.value)
-              if (errors.email) setErrors({ ...errors, email: undefined })
+              setEmail(e.target.value);
+              if (errors.email) setErrors({ ...errors, email: undefined });
             }}
             className={`w-full h-11 sm:h-12 px-3 sm:px-4 border rounded-lg outline-none transition-colors focus:border-[#1e3a5f] focus:ring-1 focus:ring-[#1e3a5f] text-sm sm:text-base ${
               errors.email ? "border-red-500" : "border-gray-200"
@@ -86,8 +101,8 @@ export function LoginForm() {
               placeholder="Enter your password"
               value={password}
               onChange={(e) => {
-                setPassword(e.target.value)
-                if (errors.password) setErrors({ ...errors, password: undefined })
+                setPassword(e.target.value);
+                if (errors.password) setErrors({ ...errors, password: undefined });
               }}
               className={`w-full h-11 sm:h-12 px-3 sm:px-4 pr-10 sm:pr-12 border rounded-lg outline-none transition-colors focus:border-[#1e3a5f] focus:ring-1 focus:ring-[#1e3a5f] text-sm sm:text-base ${
                 errors.password ? "border-red-500" : "border-gray-200"
@@ -103,16 +118,6 @@ export function LoginForm() {
             </button>
           </div>
           {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
-        </div>
-
-        <div className="flex justify-end">
-          <button
-            type="button"
-            onClick={handleForgotPassword}
-            className="text-sm text-[#3b82f6] hover:text-[#2563eb] transition-colors"
-          >
-            Forgot Password?
-          </button>
         </div>
 
         <Button
@@ -131,9 +136,9 @@ export function LoginForm() {
         </Button>
 
         <div className="text-center">
-          <span className="text-sm text-gray-500">Don't have an account? </span>
+          <span className="text-sm text-gray-500">Don&apos;t have an account? </span>
           <Link
-            href="signup"
+            href="/auth/signup"
             className="text-sm text-[#3b82f6] hover:text-[#2563eb] transition-colors font-medium"
           >
             Sign Up
@@ -141,5 +146,5 @@ export function LoginForm() {
         </div>
       </form>
     </div>
-  )
+  );
 }

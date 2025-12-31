@@ -2,9 +2,10 @@ import Image from "next/image";
 import { Badge } from "@components/ui/badge";
 import { Button } from "@components/ui/button";
 import { EditIcon, TrashIcon, FileTextIcon, CalendarIcon, MapPinIcon } from "lucide-react";
+import { getMarkdownPreview } from "@lib/utils/sanitize";
 
 interface OrgEvent {
-  id: number;
+  id: string;
   title: string;
   description: string;
   image: string;
@@ -17,9 +18,9 @@ interface OrgEvent {
 
 interface FullEventCardProps {
   event: OrgEvent;
-  onEdit: (id: number) => void;
-  onDelete: (id: number) => void;
-  onViewApplications: (id: number) => void;
+  onEdit: () => void;
+  onDelete: () => void;
+  onViewApplications: () => void;
 }
 
 
@@ -105,7 +106,7 @@ export function EventCard(props: EventCardProps) {
           {event.title}
         </h3>
         <p className="font-outfit text-sm text-gray-500 mb-3 line-clamp-2 leading-relaxed">
-          {event.description}
+          {getMarkdownPreview(event.description, 120)}
         </p>
         
         {/* Meta Info */}
@@ -129,7 +130,7 @@ export function EventCard(props: EventCardProps) {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => onEdit(event.id)}
+            onClick={onEdit}
             className="flex-1 h-9 rounded-lg font-outfit text-xs border-[#4fa3e3] text-[#4fa3e3] hover:bg-[#4fa3e3]/10 transition-colors"
           >
             <EditIcon className="w-3.5 h-3.5 mr-1.5" />
@@ -138,7 +139,7 @@ export function EventCard(props: EventCardProps) {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => onDelete(event.id)}
+            onClick={onDelete}
             className="flex-1 h-9 rounded-lg font-outfit text-xs border-red-300 text-red-500 hover:bg-red-50 transition-colors"
           >
             <TrashIcon className="w-3.5 h-3.5 mr-1.5" />
@@ -148,7 +149,7 @@ export function EventCard(props: EventCardProps) {
         <Button
           variant="ghost"
           size="sm"
-          onClick={() => onViewApplications(event.id)}
+          onClick={onViewApplications}
           className="w-full h-9 mt-2 rounded-lg font-outfit text-xs bg-[#f0f7ff] text-[#1e4e79] hover:bg-[#e0efff] transition-colors"
         >
           <FileTextIcon className="w-3.5 h-3.5 mr-1.5" />

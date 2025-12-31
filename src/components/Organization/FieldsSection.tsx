@@ -1,32 +1,77 @@
 "use client";
 
-import { useState } from "react";
-import { ZapIcon } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ZapIcon, Loader2 } from "lucide-react";
 import { Button } from "@components/ui/button";
+import { useOrganizationAuth } from "@context/OrganizationAuthContext";
 
 interface FieldsSectionProps {
   initialFields?: string[];
 }
 
 export function FieldsSection({ initialFields = [] }: FieldsSectionProps) {
+  const { organization, refreshOrganization } = useOrganizationAuth();
   const [fields, setFields] = useState<string[]>(
-    initialFields.length > 0
-      ? initialFields
-      : ["Digital Marketing", "Digital Marketing", "Digital Marketing"]
+    initialFields.length > 0 ? initialFields : []
   );
   const [isAdding, setIsAdding] = useState(false);
   const [newField, setNewField] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleAddField = () => {
-    if (newField.trim()) {
-      setFields([...fields, newField.trim()]);
-      setNewField("");
-      setIsAdding(false);
+  // Update fields when initialFields change (e.g., after refresh)
+  useEffect(() => {
+    setFields(initialFields);
+  }, [initialFields]);
+
+  const saveFields = async (newFields: string[]) => {
+    if (!organization?.id) return;
+
+    setIsSaving(true);
+    setError(null);
+
+    try {
+      const res = await fetch(`/api/organizations/${organization.id}/fields`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ fields: newFields }),
+      });
+
+      const data = await res.json();
+
+      // Standardized format: { success: true, data: { fields: [...] } }
+      if (res.ok && data.success && data.data?.fields) {
+        setFields(data.data.fields);
+        await refreshOrganization(); // Refresh organization context
+      } else {
+        const errorMsg = data.error?.message || "Failed to save fields";
+        setError(errorMsg);
+        throw new Error(errorMsg);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to save fields");
+      // Revert to previous state on error
+      setFields(initialFields);
+    } finally {
+      setIsSaving(false);
     }
   };
 
-  const handleRemoveField = (index: number) => {
-    setFields(fields.filter((_, i) => i !== index));
+  const handleAddField = async () => {
+    if (newField.trim()) {
+      const updatedFields = [...fields, newField.trim()];
+      setFields(updatedFields); // Optimistic update
+      setNewField("");
+      setIsAdding(false);
+      await saveFields(updatedFields);
+    }
+  };
+
+  const handleRemoveField = async (index: number) => {
+    const updatedFields = fields.filter((_, i) => i !== index);
+    setFields(updatedFields); // Optimistic update
+    await saveFields(updatedFields);
   };
 
   return (
@@ -41,6 +86,11 @@ export function FieldsSection({ initialFields = [] }: FieldsSectionProps) {
       </div>
 
       <div className="px-6 py-6">
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-sm text-red-600">{error}</p>
+          </div>
+        )}
         <div className="flex flex-wrap gap-2 mb-4">
           {fields.map((field, index) => (
             <div
@@ -52,7 +102,8 @@ export function FieldsSection({ initialFields = [] }: FieldsSectionProps) {
               </span>
               <button
                 onClick={() => handleRemoveField(index)}
-                className="relative flex items-center justify-center w-[13px] h-[13px] bg-[#9CA3AF] rounded-full hover:bg-[#6B7280] transition-colors"
+                disabled={isSaving}
+                className="relative flex items-center justify-center w-[13px] h-[13px] bg-[#9CA3AF] rounded-full hover:bg-[#6B7280] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 aria-label={`Remove ${field}`}
               >
                 <span className="text-white text-[10px] leading-[15px] font-inter">
@@ -69,23 +120,26 @@ export function FieldsSection({ initialFields = [] }: FieldsSectionProps) {
               type="text"
               value={newField}
               onChange={(e) => setNewField(e.target.value)}
-              onKeyPress={(e) => e.key === "Enter" && handleAddField()}
+              onKeyPress={(e) => e.key === "Enter" && !isSaving && handleAddField()}
               placeholder="Enter field name"
-              className="flex-1 px-4 py-2 rounded-lg border border-gray-200 font-inter text-sm focus:outline-none focus:ring-2 focus:ring-[#4fa3e3]"
+              disabled={isSaving}
+              className="flex-1 px-4 py-2 rounded-lg border border-gray-200 font-inter text-sm focus:outline-none focus:ring-2 focus:ring-[#4fa3e3] disabled:opacity-50"
               autoFocus
             />
             <Button
               onClick={handleAddField}
+              disabled={isSaving}
               className="bg-[#4fa3e3] hover:bg-[#3d8ac4] text-white"
               size="sm"
             >
-              Add
+              {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : "Add"}
             </Button>
             <Button
               onClick={() => {
                 setIsAdding(false);
                 setNewField("");
               }}
+              disabled={isSaving}
               variant="ghost"
               size="sm"
             >
@@ -95,9 +149,17 @@ export function FieldsSection({ initialFields = [] }: FieldsSectionProps) {
         ) : (
           <button
             onClick={() => setIsAdding(true)}
-            className="font-inter font-semibold text-[12px] leading-6 text-center text-[#1E4E79] hover:text-[#4fa3e3] transition-colors"
+            disabled={isSaving}
+            className="font-inter font-semibold text-[12px] leading-6 text-center text-[#1E4E79] hover:text-[#4fa3e3] transition-colors disabled:opacity-50"
           >
-            + Add Field
+            {isSaving ? (
+              <span className="flex items-center gap-2">
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Saving...
+              </span>
+            ) : (
+              "+ Add Field"
+            )}
           </button>
         )}
       </div>

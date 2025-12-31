@@ -1,72 +1,86 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState } from "react"
-import { Eye, EyeOff, Loader2 } from "lucide-react"
+import type React from "react";
+import { useState } from "react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { Button } from "@components/ui/button";
-import Link from "next/link"
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 export function SignUpForm() {
-  const [fullName, setFullName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<{
-    fullName?: string
-    email?: string
-    password?: string
-    confirmPassword?: string
-  }>({})
+    fullName?: string;
+    email?: string;
+    password?: string;
+    confirmPassword?: string;
+    general?: string;
+  }>({});
+
+  const router = useRouter();
+  const { signup } = useAuth();
 
   const validateForm = () => {
     const newErrors: {
-      fullName?: string
-      email?: string
-      password?: string
-      confirmPassword?: string
-    } = {}
+      fullName?: string;
+      email?: string;
+      password?: string;
+      confirmPassword?: string;
+    } = {};
 
     if (!fullName) {
-      newErrors.fullName = "Full name is required"
+      newErrors.fullName = "Full name is required";
     } else if (fullName.length < 2) {
-      newErrors.fullName = "Full name must be at least 2 characters"
+      newErrors.fullName = "Full name must be at least 2 characters";
     }
 
     if (!email) {
-      newErrors.email = "Email is required"
+      newErrors.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      newErrors.email = "Please enter a valid email"
+      newErrors.email = "Please enter a valid email";
     }
 
     if (!password) {
-      newErrors.password = "Password is required"
+      newErrors.password = "Password is required";
     } else if (password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters"
+      newErrors.password = "Password must be at least 6 characters";
     }
 
     if (!confirmPassword) {
-      newErrors.confirmPassword = "Please confirm your password"
+      newErrors.confirmPassword = "Please confirm your password";
     } else if (password !== confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match"
+      newErrors.confirmPassword = "Passwords do not match";
     }
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    if (!validateForm()) return
+    if (!validateForm()) return;
 
-    setIsLoading(true)
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    setIsLoading(false)
-    console.log("Sign up attempted with:", { fullName, email, password })
-  }
+    setIsLoading(true);
+    setErrors({});
+
+    const result = await signup(fullName, email, password);
+
+    setIsLoading(false);
+
+    if (result.success) {
+      router.push("/profile");
+    } else {
+      setErrors({ general: result.error || "Signup failed" });
+    }
+  };
 
   return (
     <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 font-outfit">
@@ -74,6 +88,12 @@ export function SignUpForm() {
         <h1 className="text-2xl font-bold text-[#1e3a5f] mb-2">Create Account</h1>
         <p className="text-gray-500 text-sm">Join Evkeria today</p>
       </div>
+
+      {errors.general && (
+        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+          <p className="text-red-600 text-sm text-center">{errors.general}</p>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Full Name */}
@@ -87,8 +107,8 @@ export function SignUpForm() {
             placeholder="Enter your full name"
             value={fullName}
             onChange={(e) => {
-              setFullName(e.target.value)
-              if (errors.fullName) setErrors({ ...errors, fullName: undefined })
+              setFullName(e.target.value);
+              if (errors.fullName) setErrors({ ...errors, fullName: undefined });
             }}
             className={`w-full h-12 px-4 border rounded-lg outline-none transition-colors focus:border-[#1e3a5f] focus:ring-1 focus:ring-[#1e3a5f] ${
               errors.fullName ? "border-red-500" : "border-gray-200"
@@ -108,8 +128,8 @@ export function SignUpForm() {
             placeholder="Enter your email"
             value={email}
             onChange={(e) => {
-              setEmail(e.target.value)
-              if (errors.email) setErrors({ ...errors, email: undefined })
+              setEmail(e.target.value);
+              if (errors.email) setErrors({ ...errors, email: undefined });
             }}
             className={`w-full h-12 px-4 border rounded-lg outline-none transition-colors focus:border-[#1e3a5f] focus:ring-1 focus:ring-[#1e3a5f] ${
               errors.email ? "border-red-500" : "border-gray-200"
@@ -130,8 +150,8 @@ export function SignUpForm() {
               placeholder="Enter your password"
               value={password}
               onChange={(e) => {
-                setPassword(e.target.value)
-                if (errors.password) setErrors({ ...errors, password: undefined })
+                setPassword(e.target.value);
+                if (errors.password) setErrors({ ...errors, password: undefined });
               }}
               className={`w-full h-12 px-4 pr-12 border rounded-lg outline-none transition-colors focus:border-[#1e3a5f] focus:ring-1 focus:ring-[#1e3a5f] ${
                 errors.password ? "border-red-500" : "border-gray-200"
@@ -161,8 +181,8 @@ export function SignUpForm() {
               placeholder="Confirm your password"
               value={confirmPassword}
               onChange={(e) => {
-                setConfirmPassword(e.target.value)
-                if (errors.confirmPassword) setErrors({ ...errors, confirmPassword: undefined })
+                setConfirmPassword(e.target.value);
+                if (errors.confirmPassword) setErrors({ ...errors, confirmPassword: undefined });
               }}
               className={`w-full h-12 px-4 pr-12 border rounded-lg outline-none transition-colors focus:border-[#1e3a5f] focus:ring-1 focus:ring-[#1e3a5f] ${
                 errors.confirmPassword ? "border-red-500" : "border-gray-200"
@@ -177,7 +197,9 @@ export function SignUpForm() {
               {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
           </div>
-          {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
+          {errors.confirmPassword && (
+            <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>
+          )}
         </div>
 
         <Button
@@ -198,7 +220,7 @@ export function SignUpForm() {
         <div className="text-center">
           <span className="text-sm text-gray-500">Already have an account? </span>
           <Link
-            href="login"
+            href="/auth/login"
             className="text-sm text-[#3b82f6] hover:text-[#2563eb] transition-colors font-medium"
           >
             Sign In
@@ -206,5 +228,5 @@ export function SignUpForm() {
         </div>
       </form>
     </div>
-  )
+  );
 }

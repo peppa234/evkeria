@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { PencilIcon } from "lucide-react";
+import { SafeMarkdown } from "@components/SafeMarkdown";
 
 interface OrganizationHeaderProps {
   name?: string;
@@ -34,11 +35,14 @@ export function OrganizationHeader({
             <div className="relative w-[85px] h-[85px] mb-2">
               <div className="w-[85px] h-[85px] rounded-full bg-white shadow-[-2px_4px_4px_-3px_rgba(0,0,0,0.06)] overflow-hidden flex items-center justify-center">
                 <Image
-                  src={logoUrl}
+                  src={logoUrl || "/logo_white.svg"}
                   alt={`${name} logo`}
                   width={85}
                   height={85}
-                  className="w-[95px] h-[95px] object-cover "
+                  className="w-[85px] h-[85px] object-contain"
+                  unoptimized={logoUrl?.startsWith('/uploads/')}
+                  key={logoUrl} // Force re-render when logoUrl changes
+                  priority
                 />
               </div>
               {onEditClick && (
@@ -65,9 +69,20 @@ export function OrganizationHeader({
 
           
           <div className="flex-1 flex items-center mt-4 md:mt-0">
-            <p className="font-inter font-normal text-[14px] leading-[21px] text-[#374151]">
-              {description}
-            </p>
+            <div className="font-inter font-normal text-[14px] leading-[21px] text-[#374151] prose prose-sm prose-slate max-w-none">
+              <SafeMarkdown
+                components={{
+                  p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                  strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+                  em: ({ children }) => <em className="italic">{children}</em>,
+                  ul: ({ children }) => <ul className="list-disc ml-4 mb-2">{children}</ul>,
+                  ol: ({ children }) => <ol className="list-decimal ml-4 mb-2">{children}</ol>,
+                  li: ({ children }) => <li className="mb-1">{children}</li>,
+                }}
+              >
+                {description || "No description yet"}
+              </SafeMarkdown>
+            </div>
           </div>
         </div>
       </div>

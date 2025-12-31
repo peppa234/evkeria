@@ -5,43 +5,20 @@ import Link from "next/link";
 import { Badge } from "@components/ui/badge";
 import { Button } from "@components/ui/button";
 import { Card, CardContent } from "@components/ui/card";
-import { useRef } from "react";
+import { useEffect, useState } from "react";
+import { EventListSkeleton } from "@components/ui/skeleton";
 
-const featuredOpportunities = [
-  {
-    id: 1,
-    image: "/image.png",
-    badge: "Workshop",
-    badgeColor: "bg-[#f7c948]",
-    title: "AI & Machine Learning Workshop",
-    organization: "Tech Innovation Hub",
-    location: "Algiers",
-    date: "Dec 15, 2024",
-    hasOverlay: true,
-  },
-  {
-    id: 2,
-    image: "/image-1.png",
-    badge: "Workshop",
-    badgeColor: "bg-[#f7c948]",
-    title: "AI & Machine Learning Workshop",
-    organization: "Tech Innovation Hub",
-    location: "Algiers",
-    date: "Dec 15, 2024",
-    hasOverlay: false,
-  },
-  {
-    id: 3,
-    image: "/image-2.png",
-    badge: "Workshop",
-    badgeColor: "bg-[#f7c948]",
-    title: "AI & Machine Learning Workshop",
-    organization: "Tech Innovation Hub",
-    location: "Algiers",
-    date: "Dec 15, 2024",
-    hasOverlay: true,
-  },
-];
+interface FeaturedEvent {
+  id: string;
+  title: string;
+  imageUrl?: string;
+  category: string;
+  location?: string;
+  date: string;
+  organization?: {
+    name: string;
+  };
+}
 
 const whyEvkeriaFeatures = [
   {
@@ -75,8 +52,43 @@ const whyEvkeriaFeatures = [
 ];
 
 export default function HomePage() {
+  const [featuredEvents, setFeaturedEvents] = useState<FeaturedEvent[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchFeaturedEvents();
+  }, []);
+
+  const fetchFeaturedEvents = async () => {
+    try {
+      const response = await fetch("/api/events?limit=3");
+      if (!response.ok) {
+        throw new Error("Failed to fetch events");
+      }
+      const data = await response.json();
+      // Standardized format: { success: true, data: { events: [...] } }
+      if (data.success && data.data?.events) {
+        setFeaturedEvents(data.data.events);
+      } else {
+        setFeaturedEvents([]);
+      }
+    } catch (err) {
+      setFeaturedEvents([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
   };
 
   return (
@@ -155,71 +167,80 @@ export default function HomePage() {
             Handpicked programs and events happening now.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {featuredOpportunities.map((opportunity) => (
-              <Card
-                key={opportunity.id}
-                className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 ease-out overflow-hidden hover:scale-[1.02] hover:-translate-y-2 active:scale-100"
-              >
-                <CardContent className="p-0">
-                  <div className="relative h-48 sm:h-52">
-                    <Image
-                      className="w-full h-full object-cover transition-opacity duration-300"
-                      alt={opportunity.title}
-                      src={opportunity.image}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      quality={90}
-                      loading="lazy"
-                    />
-                    {opportunity.hasOverlay && (
-                      <div className="absolute inset-0 bg-black/25" />
-                    )}
-                    <Badge
-                      className={`absolute top-4 left-4 ${opportunity.badgeColor} font-outfit font-medium text-white text-sm px-3 py-1`}
-                    >
-                      {opportunity.badge}
-                    </Badge>
-                  </div>
-
-                  <div className="p-4 sm:p-6">
-                    <h3 className="font-outfit font-semibold text-[#1e4e79] text-xl sm:text-2xl leading-tight mb-4 sm:mb-6">
-                      {opportunity.title}
-                    </h3>
-
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="w-2 h-2 bg-[#4fa3e3] rounded-full" />
-                      <p className="font-outfit font-medium text-[#4fa3e3] text-sm sm:text-base">
-                        {opportunity.organization}
-                      </p>
+          {isLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <EventListSkeleton count={3} />
+            </div>
+          ) : featuredEvents.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-500">No events available</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              {featuredEvents.map((event) => (
+                <Card
+                  key={event.id}
+                  className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 ease-out overflow-hidden hover:scale-[1.02] hover:-translate-y-2 active:scale-100"
+                >
+                  <CardContent className="p-0">
+                    <div className="relative h-48 sm:h-52">
+                      <Image
+                        className="w-full h-full object-cover transition-opacity duration-300"
+                        alt={event.title}
+                        src={event.imageUrl || "/image.png"}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        quality={90}
+                        loading="lazy"
+                      />
+                      <Badge
+                        className="absolute top-4 left-4 bg-[#f7c948] font-outfit font-medium text-white text-sm px-3 py-1"
+                      >
+                        {event.category}
+                      </Badge>
                     </div>
 
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6 mb-4">
-                      <div className="flex items-center gap-2">
-                        <Image className="w-4 h-4" alt="Location" src="/frame-3.svg" width={16} height={16} />
-                        <span className="font-outfit font-normal text-[#1e4e79] text-xs sm:text-sm">
-                          {opportunity.location}
-                        </span>
+                    <div className="p-4 sm:p-6">
+                      <h3 className="font-outfit font-semibold text-[#1e4e79] text-xl sm:text-2xl leading-tight mb-4 sm:mb-6">
+                        {event.title}
+                      </h3>
+
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="w-2 h-2 bg-[#4fa3e3] rounded-full" />
+                        <p className="font-outfit font-medium text-[#4fa3e3] text-sm sm:text-base">
+                          {event.organization?.name || "Unknown Organization"}
+                        </p>
                       </div>
 
-                      <div className="flex items-center gap-2">
-                        <Image className="w-4 h-4" alt="Date" src="/frame-4.svg" width={16} height={16} />
-                        <span className="font-outfit font-normal text-[#1e4e79] text-xs sm:text-sm">
-                          {opportunity.date}
-                        </span>
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6 mb-4">
+                        {event.location && (
+                          <div className="flex items-center gap-2">
+                            <Image className="w-4 h-4" alt="Location" src="/frame-3.svg" width={16} height={16} />
+                            <span className="font-outfit font-normal text-[#1e4e79] text-xs sm:text-sm">
+                              {event.location}
+                            </span>
+                          </div>
+                        )}
+
+                        <div className="flex items-center gap-2">
+                          <Image className="w-4 h-4" alt="Date" src="/frame-4.svg" width={16} height={16} />
+                          <span className="font-outfit font-normal text-[#1e4e79] text-xs sm:text-sm">
+                            {formatDate(event.date)}
+                          </span>
+                        </div>
                       </div>
+
+                      <Link href={`/events/${event.id}`}>
+                        <Button className="w-full h-11 sm:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-r from-[#4fa3e3] to-[#6fb3e6] font-outfit font-medium text-white text-sm sm:text-base hover:shadow-lg hover:scale-[1.02] transition-all duration-200">
+                          View Details
+                        </Button>
+                      </Link>
                     </div>
-
-                    <Link href={`/events/${opportunity.id}`}>
-                      <Button className="w-full h-11 sm:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-r from-[#4fa3e3] to-[#6fb3e6] font-outfit font-medium text-white text-sm sm:text-base hover:shadow-lg hover:scale-[1.02] transition-all duration-200">
-                        View Details
-                      </Button>
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
