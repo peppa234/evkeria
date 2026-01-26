@@ -26,7 +26,6 @@ yarn-error.log*
 
 # local env files
 .env*.local
-.env
 
 # vercel
 .vercel
@@ -34,10 +33,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# uploaded files (keep directory structure)
-/public/uploads/**/*
-!/public/uploads/.gitkeep
-!/public/uploads/users/.gitkeep
-!/public/uploads/organizations/.gitkeep
-!/public/uploads/events/.gitkeep
