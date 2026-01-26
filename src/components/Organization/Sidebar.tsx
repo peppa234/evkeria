@@ -15,6 +15,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@components/ui/button";
 import { cn } from "@lib/utils";
+import { useOrganizationAuth } from "@context/OrganizationAuthContext";
 
 interface NavigationItem {
   icon: LucideIcon;
@@ -28,23 +29,26 @@ const SIDEBAR_WIDTH = 280;
 interface SidebarContentProps {
   navigationItems: NavigationItem[];
   onLinkClick?: () => void;
+  onLogout: () => void;
 }
 
-function SidebarContent({ navigationItems, onLinkClick }: SidebarContentProps) {
+function SidebarContent({ navigationItems, onLinkClick, onLogout }: SidebarContentProps) {
   return (
     <>
-      <div className="p-6">
-        <Image
-          className="w-[78px] h-[78px]"
-          alt="Evkeria Logo"
-          src="/img.png"
-          width={78}
-          height={78}
-          priority
-        />
+      <div className="p-6 pb-8">
+        <Link href="/" onClick={onLinkClick} className="block hover:opacity-80 transition-opacity">
+          <Image
+            className="w-[78px] h-[78px]"
+            alt="Evkeria Logo"
+            src="/logo_white.svg"
+            width={78}
+            height={78}
+            priority
+          />
+        </Link>
       </div>
 
-      <nav className="flex-1 px-6 space-y-2" aria-label="Main navigation">
+      <nav className="flex-1 px-6 space-y-4" aria-label="Main navigation">
         {navigationItems.map((item) => {
           const Icon = item.icon;
           return (
@@ -52,10 +56,10 @@ function SidebarContent({ navigationItems, onLinkClick }: SidebarContentProps) {
               <Button
                 variant="ghost"
                 className={cn(
-                  "w-full justify-start h-12 rounded-xl font-outfit font-medium text-base transition-colors",
+                  "w-full justify-start h-12 rounded-xl font-outfit font-medium text-base transition-all duration-200",
                   item.active
-                    ? "bg-[#4fa3e3] text-white hover:bg-[#4fa3e3] hover:text-white"
-                    : "text-[#b8d4f0] hover:bg-[#4fa3e3]/20 hover:text-white"
+                    ? "bg-[#4fa3e3] text-white hover:bg-[#4fa3e3] hover:text-white shadow-lg shadow-[#4fa3e3]/30"
+                    : "text-[#b8d4f0] hover:bg-[#4fa3e3]/20 hover:text-white hover:translate-x-1"
                 )}
                 aria-current={item.active ? "page" : undefined}
               >
@@ -67,13 +71,13 @@ function SidebarContent({ navigationItems, onLinkClick }: SidebarContentProps) {
         })}
       </nav>
 
-      <div className="px-6 pb-6">
-        <div className="w-full h-px bg-[#b8d4f0] mb-6" aria-hidden="true" />
+      <div className="px-6 pb-8 pt-4">
+        <div className="w-full h-px bg-[#b8d4f0]/30 mb-6" aria-hidden="true" />
         <Button
           variant="ghost"
-          className="w-full justify-start text-[#b8d4f0] hover:bg-[#4fa3e3]/20 hover:text-white font-outfit font-medium text-base transition-colors"
+          onClick={onLogout}
+          className="w-full justify-start text-[#b8d4f0] hover:bg-red-500/20 hover:text-red-300 hover:translate-x-1 font-outfit font-medium text-base transition-all duration-200"
           aria-label="Logout"
-          onClick={onLinkClick}
         >
           <LogOutIcon className="w-5 h-5" aria-hidden="true" />
           <span className="ml-3">Logout</span>
@@ -86,6 +90,7 @@ function SidebarContent({ navigationItems, onLinkClick }: SidebarContentProps) {
 export function Sidebar() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { logout } = useOrganizationAuth();
 
   const navigationItems: NavigationItem[] = [
     {
@@ -105,8 +110,8 @@ export function Sidebar() {
     {
       icon: UserIcon,
       label: "Profile",
-      href: "/profile",
-      active: pathname === "/profile",
+      href: "/organization/profile",
+      active: pathname === "/organization/profile",
     },
   ];
 
@@ -118,12 +123,15 @@ export function Sidebar() {
     setIsMobileMenuOpen(false);
   };
 
-  // Close mobile menu when route changes
+  const handleLogout = () => {
+    closeMobileMenu();
+    logout();
+  };
+
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -137,10 +145,9 @@ export function Sidebar() {
 
   return (
     <>
-      {/* Mobile Hamburger Button */}
       <button
         onClick={toggleMobileMenu}
-        className="md:hidden fixed top-4 right-4 z-50 p-2 rounded-lg bg-[#1e4e79] text-white shadow-lg hover:bg-[#4fa3e3] transition-colors"
+        className="md:hidden fixed top-4 right-4 z-50 p-2 rounded-lg bg-[#1e4e79] text-white shadow-lg hover:bg-[#4fa3e3] transition-all duration-200 hover:scale-105"
         aria-label="Toggle navigation menu"
         aria-expanded={isMobileMenuOpen}
       >
@@ -151,7 +158,6 @@ export function Sidebar() {
         )}
       </button>
 
-      {/* Mobile Overlay */}
       {isMobileMenuOpen && (
         <div
           className="md:hidden fixed inset-0 bg-black/50 z-40 transition-opacity"
@@ -160,15 +166,13 @@ export function Sidebar() {
         />
       )}
 
-      {/* Desktop Sidebar */}
       <aside
         className="hidden md:flex w-[280px] h-screen fixed left-0 top-0 shadow-lg bg-[#1e4e79] flex-col z-10"
         aria-label="Organization navigation sidebar"
       >
-        <SidebarContent navigationItems={navigationItems} />
+        <SidebarContent navigationItems={navigationItems} onLogout={handleLogout} />
       </aside>
 
-      {/* Mobile Sidebar */}
       <aside
         className={cn(
           "md:hidden fixed top-0 right-0 w-[280px] h-screen shadow-lg bg-[#1e4e79] flex-col z-50 transform transition-transform duration-300 ease-in-out flex",
@@ -180,6 +184,7 @@ export function Sidebar() {
         <SidebarContent
           navigationItems={navigationItems}
           onLinkClick={closeMobileMenu}
+          onLogout={handleLogout}
         />
       </aside>
     </>
@@ -187,4 +192,3 @@ export function Sidebar() {
 }
 
 export { SIDEBAR_WIDTH };
-

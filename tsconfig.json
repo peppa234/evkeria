@@ -23,6 +23,9 @@
       }
     ],
     "paths": {
+      "@/*": [
+        "./src/*"
+      ],
       "@components/*": [
         "./src/components/*"
       ],
@@ -40,6 +43,9 @@
       ],
       "@data/*": [
         "./src/data/*"
+      ],
+      "@context/*": [
+        "./src/context/*"
       ]
     }
   },

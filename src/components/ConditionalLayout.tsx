@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Navbar } from "./Navbar/Navbar";
 import { Footer } from "./Footer/Footer";
+import { BackToTop } from "./BackToTop";
 
 export function ConditionalLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -13,7 +14,12 @@ export function ConditionalLayout({ children }: { children: React.ReactNode }) {
   
   // Organization pages have their own layout
   if (isOrganizationPage) {
-    return <>{children}</>;
+    return (
+      <>
+        {children}
+        <BackToTop />
+      </>
+    );
   }
   
   return (
@@ -23,6 +29,7 @@ export function ConditionalLayout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
       {!isAuthPage && <Footer />}
+      <BackToTop />
     </>
   );
 }

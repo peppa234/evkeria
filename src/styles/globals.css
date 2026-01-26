@@ -96,6 +96,10 @@
   .delay-300 {
     animation-delay: 300ms;
   }
+  
+  .animate-bounce-subtle {
+    animation: bounceSubtle 2s ease-in-out infinite;
+  }
 }
 
 @keyframes fadeIn {
@@ -151,5 +155,89 @@
   }
 }
 
+@keyframes bounceSubtle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
 @import url("https://fonts.googleapis.com/css?family=Outfit:500,400,600");
+
+/* ================================================
+   SHORT HEIGHT SCREEN FIXES (viewport height <= 520px)
+   Prevents hero content from overlapping navbar
+   ================================================ */
+
+/* Hero section wrapper - adds proper spacing for navbar */
+.hero-section {
+  padding-top: 100px; /* Default navbar clearance */
+}
+
+@media (max-width: 640px) {
+  .hero-section {
+    padding-top: 80px;
+  }
+}
+
+/* Short height screen adjustments */
+@media (max-height: 520px) {
+  /* Reduce hero title sizes */
+  .hero-title {
+    font-size: clamp(1.5rem, 5vw, 2.5rem) !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Reduce hero subtitle/description sizes */
+  .hero-subtitle {
+    font-size: clamp(0.875rem, 2.5vw, 1.125rem) !important;
+    line-height: 1.4 !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  /* Reduce button sizes and gaps */
+  .hero-buttons {
+    gap: 0.5rem !important;
+  }
+
+  .hero-buttons button,
+  .hero-buttons a button {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.875rem !important;
+    height: auto !important;
+    min-height: 2.25rem !important;
+  }
+
+  /* Reduce hero section min-height to prevent overflow */
+  .hero-section {
+    min-height: auto !important;
+    padding-top: 90px !important;
+    padding-bottom: 60px !important;
+  }
+
+  /* Ensure hero content container allows scrolling */
+  .hero-content {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+}
+
+/* Very short height screens */
+@media (max-height: 400px) {
+  .hero-section {
+    padding-top: 70px !important;
+    padding-bottom: 40px !important;
+  }
+
+  .hero-title {
+    font-size: clamp(1.25rem, 4vw, 2rem) !important;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(0.75rem, 2vw, 1rem) !important;
+  }
+}
 

@@ -1,5 +1,11 @@
 import Link from "next/link";
-import { Event } from "@data/dummy-events";
+
+interface Event {
+  _id: string;
+  title: string;
+  date: string;
+  location?: string;
+}
 
 interface EventTableProps {
   events: Event[];
@@ -19,13 +25,13 @@ export function EventTable({ events }: EventTableProps) {
         </thead>
         <tbody>
           {events.map((event) => (
-            <tr key={event.id} className="border-b">
+            <tr key={event._id} className="border-b">
               <td className="px-6 py-4 font-outfit">{event.title}</td>
               <td className="px-6 py-4 font-outfit">{event.date}</td>
               <td className="px-6 py-4 font-outfit">{event.location}</td>
               <td className="px-6 py-4">
                 <Link
-                  href={`/organization/events/${event.id}`}
+                  href={`/organization/events/${event._id}`}
                   className="text-[#4fa3e3] hover:underline font-outfit"
                 >
                   Edit

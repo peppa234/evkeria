@@ -14,6 +14,8 @@ interface SearchBarProps {
   onSearchSubmit: (e: React.FormEvent) => void;
   setSearchQuery: (value: string) => void;
   setCurrentPage: (page: number) => void;
+  availableLocations?: string[];
+  availableTypes?: string[];
 }
 
 export function SearchBar({
@@ -28,24 +30,23 @@ export function SearchBar({
   onSearchSubmit,
   setSearchQuery,
   setCurrentPage,
+  availableLocations = [],
+  availableTypes = [],
 }: SearchBarProps) {
   const [showLocationDropdown, setShowLocationDropdown] = useState(false);
   const [showTypeDropdown, setShowTypeDropdown] = useState(false);
   const [showTimeDropdown, setShowTimeDropdown] = useState(false);
 
+  // Build locations from available data
   const locations = [
     { label: "ALL", value: "" },
-    { label: "Algiers", value: "Algiers" },
-    { label: "Oran", value: "Oran" },
-    { label: "Online", value: "Online" },
+    ...availableLocations.map((loc) => ({ label: loc, value: loc })),
   ];
 
+  // Build types from available data
   const types = [
     { label: "ALL", value: "" },
-    { label: "Workshop", value: "Workshop" },
-    { label: "Training", value: "Training" },
-    { label: "Volunteering", value: "Volunteering" },
-    { label: "Conference", value: "Conference" },
+    ...availableTypes.map((t) => ({ label: t, value: t })),
   ];
 
   const times = [
@@ -55,10 +56,17 @@ export function SearchBar({
     { label: "This Month", value: "This Month" },
   ];
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      onSearchSubmit(e as any);
+      // Create a synthetic form event for the submit handler
+      const form = e.currentTarget.form;
+      if (form) {
+        const formEvent = new Event('submit', { bubbles: true, cancelable: true }) as unknown as React.FormEvent;
+        Object.defineProperty(formEvent, 'currentTarget', { value: form });
+        Object.defineProperty(formEvent, 'target', { value: form });
+        onSearchSubmit(formEvent);
+      }
     }
   };
 
@@ -114,7 +122,7 @@ export function SearchBar({
               }}
               className="w-full sm:w-[140px] lg:w-[174.36px] h-12 sm:h-[61.03px] bg-[#F9FAFB] border border-[#E5E7EB] rounded-xl font-outfit font-normal text-sm sm:text-base text-[#374151] flex items-center justify-center gap-2 cursor-pointer outline-none hover:bg-[#F3F4F6] transition-colors"
             >
-              <span className="truncate">{wilaya || "Wilaya"}</span>
+              <span className="truncate">{wilaya || "Location"}</span>
               <ChevronDown size={20} className="text-[#374151] flex-shrink-0" />
             </button>
             {showLocationDropdown && (
@@ -209,7 +217,13 @@ export function SearchBar({
           <button
             onClick={(e) => {
               e.preventDefault();
-              onSearchSubmit(e as any);
+              const form = e.currentTarget.closest('form');
+              if (form) {
+                const formEvent = new Event('submit', { bubbles: true, cancelable: true }) as unknown as React.FormEvent;
+                Object.defineProperty(formEvent, 'currentTarget', { value: form });
+                Object.defineProperty(formEvent, 'target', { value: form });
+                onSearchSubmit(formEvent);
+              }
             }}
             className="w-full sm:w-[140px] lg:w-[153.65px] h-12 sm:h-[61.03px] bg-[#F7C948] shadow-[0px_2px_8px_rgba(30,78,121,0.24)] rounded-xl border-none cursor-pointer flex items-center justify-center gap-2 font-outfit font-semibold text-sm sm:text-base text-white hover:bg-[#E5B632] transition-colors"
           >

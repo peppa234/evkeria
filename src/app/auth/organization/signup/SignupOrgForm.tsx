@@ -5,13 +5,14 @@ import { useState } from "react"
 import { Eye, EyeOff, Loader2 } from "lucide-react"
 import { Button } from "@components/ui/button"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useOrganizationAuth } from "@context/OrganizationAuthContext"
 
 export function SignUpForm() {
   const [organizationName, setOrganizationName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
-  const [description, setDescription] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -20,8 +21,11 @@ export function SignUpForm() {
     email?: string
     password?: string
     confirmPassword?: string
-    description?: string
+    general?: string
   }>({})
+
+  const { signup } = useOrganizationAuth()
+  const router = useRouter()
 
   const validateForm = () => {
     const newErrors: {
@@ -29,7 +33,6 @@ export function SignUpForm() {
       email?: string
       password?: string
       confirmPassword?: string
-      description?: string
     } = {}
 
     if (!organizationName) {
@@ -44,18 +47,22 @@ export function SignUpForm() {
 
     if (!password) {
       newErrors.password = "Password is required"
-    } else if (password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters"
+    } else {
+      if (password.length < 8) {
+        newErrors.password = "Password must be at least 8 characters"
+      } else if (!/[A-Z]/.test(password)) {
+        newErrors.password = "Password must contain at least one uppercase letter"
+      } else if (!/[a-z]/.test(password)) {
+        newErrors.password = "Password must contain at least one lowercase letter"
+      } else if (!/[0-9]/.test(password)) {
+        newErrors.password = "Password must contain at least one number"
+      }
     }
 
     if (!confirmPassword) {
       newErrors.confirmPassword = "Please confirm your password"
     } else if (password !== confirmPassword) {
       newErrors.confirmPassword = "Passwords do not match"
-    }
-
-    if (!description) {
-      newErrors.description = "Description is required"
     }
 
     setErrors(newErrors)
@@ -68,25 +75,33 @@ export function SignUpForm() {
     if (!validateForm()) return
 
     setIsLoading(true)
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    setErrors({})
+
+    const result = await signup(organizationName, email, password)
+
+    if (result.success) {
+      router.push("/organization/dashboard")
+    } else {
+      setErrors({ general: result.error })
+    }
+
     setIsLoading(false)
-    console.log("Sign up attempted with:", {
-      organizationName,
-      email,
-      password,
-      description,
-    })
   }
 
   return (
-    <div className="w-full max-w-md bg-white rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6 md:p-8">
+    <div className="w-full max-w-md bg-white rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6 md:p-8 font-outfit">
       <div className="text-center mb-6 sm:mb-8">
         <h1 className="text-xl sm:text-2xl font-bold text-[#1e3a5f] mb-2">
           Organization Sign Up
         </h1>
         <p className="text-gray-500 text-xs sm:text-sm">Join Evkeria today</p>
       </div>
+
+      {errors.general && (
+        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
+          {errors.general}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-2">
@@ -208,32 +223,6 @@ export function SignUpForm() {
           )}
         </div>
 
-        <div className="space-y-2">
-          <label
-            htmlFor="description"
-            className="block text-gray-700 text-sm font-medium"
-          >
-            Description
-          </label>
-          <textarea
-            id="description"
-            placeholder="Describe your organization"
-            value={description}
-            onChange={(e) => {
-              setDescription(e.target.value)
-              if (errors.description)
-                setErrors({ ...errors, description: undefined })
-            }}
-            rows={3}
-            className={`w-full px-3 sm:px-4 py-3 border rounded-lg outline-none transition-colors focus:border-[#1e3a5f] focus:ring-1 focus:ring-[#1e3a5f] text-sm sm:text-base resize-none ${
-              errors.description ? "border-red-500" : "border-gray-200"
-            }`}
-          />
-          {errors.description && (
-            <p className="text-red-500 text-xs mt-1">{errors.description}</p>
-          )}
-        </div>
-
         <Button
           type="submit"
           disabled={isLoading}
@@ -257,32 +246,6 @@ export function SignUpForm() {
           >
             Sign In
           </Link>
-        </div>
-
-        <div className="flex items-center justify-center gap-2 text-xs text-gray-400 pt-4">
-          <button
-            type="button"
-            onClick={() => console.log("Privacy Policy")}
-            className="hover:text-gray-600 transition-colors"
-          >
-            Privacy Policy
-          </button>
-          <span>•</span>
-          <button
-            type="button"
-            onClick={() => console.log("Terms of Service")}
-            className="hover:text-gray-600 transition-colors"
-          >
-            Terms of Service
-          </button>
-          <span>•</span>
-          <button
-            type="button"
-            onClick={() => console.log("Support")}
-            className="hover:text-gray-600 transition-colors"
-          >
-            Support
-          </button>
         </div>
       </form>
     </div>

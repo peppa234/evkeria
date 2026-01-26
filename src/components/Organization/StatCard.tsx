@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Card, CardContent } from "@components/ui/card";
 import { cn } from "@lib/utils";
 
 interface StatCardProps {
@@ -20,11 +19,11 @@ export function StatCard({
   subtextColor,
 }: StatCardProps) {
   return (
-    <Card className="bg-[#f0f7ff] rounded-[18px] border border-[#e1e9f4] shadow-sm">
-      <CardContent className="p-6">
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200 p-5">
+      <div className="flex items-start justify-between mb-4">
         <div
           className={cn(
-            "w-11 h-11 rounded-xl flex items-center justify-center mb-6",
+            "w-12 h-12 rounded-xl flex items-center justify-center",
             bgColor
           )}
         >
@@ -36,17 +35,16 @@ export function StatCard({
             height={24}
           />
         </div>
-        <div className="font-outfit font-bold text-[#0e1f35] text-2xl leading-[30px] mb-2">
-          {value}
-        </div>
-        <div className="font-outfit font-medium text-gray-500 text-sm leading-[18px] mb-3">
-          {label}
-        </div>
-        <div className={cn("font-outfit font-medium text-xs leading-3", subtextColor)}>
-          {subtext}
-        </div>
-      </CardContent>
-    </Card>
+      </div>
+      <div className="font-outfit font-bold text-[#0e1f35] text-3xl leading-none mb-1">
+        {value}
+      </div>
+      <div className="font-outfit font-medium text-gray-500 text-sm mb-2">
+        {label}
+      </div>
+      <div className={cn("font-outfit font-medium text-xs", subtextColor)}>
+        {subtext}
+      </div>
+    </div>
   );
 }
-

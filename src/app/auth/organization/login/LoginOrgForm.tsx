@@ -5,13 +5,18 @@ import { useState } from "react"
 import { Eye, EyeOff, Loader2 } from "lucide-react"
 import { Button } from "@components/ui/button"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useOrganizationAuth } from "@context/OrganizationAuthContext"
 
 export function LoginForm() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>({})
+  const [errors, setErrors] = useState<{ email?: string; password?: string; general?: string }>({})
+  
+  const { login } = useOrganizationAuth()
+  const router = useRouter()
 
   const validateForm = () => {
     const newErrors: { email?: string; password?: string } = {}
@@ -38,22 +43,31 @@ export function LoginForm() {
     if (!validateForm()) return
 
     setIsLoading(true)
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    setIsLoading(false)
-    console.log("Login attempted with:", { email, password })
-  }
+    setErrors({})
 
-  const handleForgotPassword = () => {
-    console.log("Forgot password clicked")
+    const result = await login(email, password)
+
+    if (result.success) {
+      router.push("/organization/dashboard")
+    } else {
+      setErrors({ general: result.error })
+    }
+
+    setIsLoading(false)
   }
 
   return (
-    <div className="w-full max-w-md bg-white rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6 md:p-8">
+    <div className="w-full max-w-md bg-white rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6 md:p-8 font-outfit">
       <div className="text-center mb-6 sm:mb-8">
         <h1 className="text-xl sm:text-2xl font-bold text-[#1e3a5f] mb-2">Organization Sign In</h1>
         <p className="text-gray-500 text-xs sm:text-sm">Welcome back, organizer</p>
       </div>
+
+      {errors.general && (
+        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
+          {errors.general}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
         <div className="space-y-2">
@@ -106,16 +120,6 @@ export function LoginForm() {
           {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
         </div>
 
-        <div className="flex justify-end">
-          <button
-            type="button"
-            onClick={handleForgotPassword}
-            className="text-sm text-[#3b82f6] hover:text-[#2563eb] transition-colors"
-          >
-            Forgot Password?
-          </button>
-        </div>
-
         <Button
           type="submit"
           disabled={isLoading}
@@ -139,32 +143,6 @@ export function LoginForm() {
           >
             Sign Up
           </Link>
-        </div>
-
-        <div className="flex items-center justify-center gap-2 text-xs text-gray-400 pt-4">
-          <button
-            type="button"
-            onClick={() => console.log("Privacy Policy")}
-            className="hover:text-gray-600 transition-colors"
-          >
-            Privacy Policy
-          </button>
-          <span>•</span>
-          <button
-            type="button"
-            onClick={() => console.log("Terms of Service")}
-            className="hover:text-gray-600 transition-colors"
-          >
-            Terms of Service
-          </button>
-          <span>•</span>
-          <button
-            type="button"
-            onClick={() => console.log("Support")}
-            className="hover:text-gray-600 transition-colors"
-          >
-            Support
-          </button>
         </div>
       </form>
     </div>

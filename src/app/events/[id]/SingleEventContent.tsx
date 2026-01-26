@@ -1,66 +1,120 @@
 "use client";
 
 import Image from "next/image";
-import { Calendar, MapPin, Users } from "lucide-react";
+import Link from "next/link";
+import { Calendar, MapPin, Users, ExternalLink } from "lucide-react";
 import { Button } from "@components/ui/button";
 import { Card, CardContent } from "@components/ui/card";
-import { Event } from "@data/dummy-events";
 import { EventCard } from "@components/EventCard/EventCard";
+import { useEffect, useState } from "react";
+import { SafeMarkdown } from "@components/SafeMarkdown";
+
+interface ApiEvent {
+  id: string;
+  title: string;
+  description?: string;
+  imageUrl?: string;
+  date: string;
+  registrationDeadline?: string;
+  startTime?: string;
+  endTime?: string;
+  location?: string;
+  category: string;
+  status: string;
+  maxAttendees?: number;
+  price: number;
+  applicationLink?: string;
+  organization?: {
+    _id: string;
+    name: string;
+    logoUrl?: string;
+    email?: string;
+    websiteUrl?: string;
+    description?: string;
+  };
+}
 
 type Props = {
-  event?: Event;
+  event: ApiEvent;
 };
 
+interface RelatedEvent {
+  id: string;
+  title: string;
+  description?: string;
+  imageUrl?: string;
+  category: string;
+  organization?: {
+    name: string;
+  };
+  location?: string;
+  date: string;
+}
+
+interface EventCardData {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  badge: string;
+  badgeColor: string;
+  organization: string;
+  location: string;
+  date: string;
+  category: string;
+  hasOverlay: boolean;
+}
+
 export default function SingleEventContent({ event }: Props) {
-  const organizer = {
-    name: "TechHub Algeria",
-    description:
-      "Leading technology community in Algeria, dedicated to fostering innovation and connecting tech professionals across the country. We organize events, workshops, and networking opportunities to advance the local tech ecosystem.",
-    logo: "/img.png",
+  const [relatedEvents, setRelatedEvents] = useState<EventCardData[]>([]);
+
+  useEffect(() => {
+    fetchRelatedEvents();
+  }, [event.category]);
+
+  const fetchRelatedEvents = async () => {
+    try {
+      const res = await fetch(`/api/events?category=${event.category}&limit=3`);
+      if (res.ok) {
+        const data = await res.json();
+        // Standardized format: { success: true, data: { events: [...] } }
+        const events: RelatedEvent[] = data.success && data.data?.events ? data.data.events : [];
+        // Filter out current event and map to card format
+        const filtered: EventCardData[] = events
+          .filter((e) => e.id !== event.id)
+          .slice(0, 3)
+          .map((e) => ({
+            id: e.id,
+            title: e.title,
+            description: e.description || "",
+            image: e.imageUrl || "/image.png",
+            badge: e.category,
+            badgeColor: "bg-[#f7c948]",
+            organization: e.organization?.name || "Unknown Organization",
+            location: e.location || "",
+            date: new Date(e.date).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            }),
+            category: e.category,
+            hasOverlay: false,
+          }));
+        setRelatedEvents(filtered);
+      }
+    } catch (err) {
+      // Error fetching related events 
+    }
   };
 
-  const relatedEvents: Event[] = [
-    {
-      id: 101,
-      title: "Startup Pitch Competition",
-      description:
-        "Present your startup idea to investors and win funding. Open to all entrepreneurs with innovative business concepts.",
-      image: "/image-1.png",
-      badge: "Competition",
-      badgeColor: "bg-[#f7c948]",
-      organization: "Innovation Hub",
-      location: "Constantine",
-      date: "April 5, 2025",
-      category: "Competition",
-      hasOverlay: false,
-    },
-    {
-      id: 102,
-      title: "Youth Leadership Workshop",
-      description: "Develop essential leadership skills through interactive sessions, team building activities, and mentorship opportunities.",
-      image: "/Hero-section-bg-image.png",
-      badge: "Workshop",
-      badgeColor: "bg-[#f7c948]",
-      organization: "Future Leaders Algeria",
-      location: "Annaba",
-      date: "April 12, 2025",
-      category: "Workshop",
-      hasOverlay: false,
-    },
-    {
-      id: 103,
-      title: "Amazigh Cultural Festival",
-      description: "Celebrate Amazigh heritage through traditional music, dance, crafts, and cuisine. Family-friendly event with activities for all ages.",
-      image: "/image.png",
-      badge: "Cultural Event",
-      badgeColor: "bg-[#f7c948]",
-      organization: "Cultural Heritage Society",
-      location: "Tizi Ouzou",
-      date: "April 20, 2025",
-      category: "Cultural Event",
-      hasOverlay: false,
-    },
-  ];
+  const eventDate = new Date(event.date);
+  const formattedMonth = eventDate.toLocaleDateString("en-US", { month: "long" });
+  const formattedDay = eventDate.getDate();
+  const formattedYear = eventDate.getFullYear();
+
+  const timeRange = event.startTime && event.endTime
+    ? `${event.startTime} - ${event.endTime}`
+    : event.startTime || "TBD";
 
   return (
     <div className="max-w-7xl mx-auto px-6 lg:px-16 py-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
@@ -70,70 +124,80 @@ export default function SingleEventContent({ event }: Props) {
           <h2 id="about-title" className="text-2xl font-outfit font-semibold text-[#1e1e1e] mb-4">
             About this Event
           </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Join industry leaders and innovators for a day of cutting-edge technology discussions, networking, and hands-on workshops. The Algeria Tech Summit 2025 brings together the brightest minds in technology to explore the future of innovation in Algeria and beyond.
-          </p>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            This premier technology conference will feature keynote presentations from renowned tech leaders, interactive panel discussions on emerging technologies, and practical workshops designed to enhance your technical skills. Whether you're a seasoned professional or just starting your tech journey, this event offers valuable insights and networking opportunities.
-          </p>
-          <p className="text-gray-700 leading-relaxed">
-            Discover the latest trends in artificial intelligence, blockchain, cybersecurity, and digital transformation. Learn from successful entrepreneurs who have built thriving tech companies and gain practical knowledge that you can apply immediately in your career or business.
-          </p>
-        </section>
-
-        <section aria-labelledby="learn-title" className="bg-white rounded-2xl shadow p-6">
-          <h2 id="learn-title" className="text-2xl font-outfit font-semibold text-[#1e1e1e] mb-4">
-            What You Will Learn
-          </h2>
-          <ul className="list-disc pl-5 text-gray-700 space-y-2">
-            <li>Latest trends in AI and ML</li>
-            <li>Blockchain technology and cryptocurrency implementation strategies</li>
-            <li>Cybersecurity best practices for modern businesses</li>
-            <li>Digital transformation strategies for traditional industries</li>
-            <li>Startup funding and investment opportunities</li>
-            <li>Networking strategies to build meaningful professional relationships</li>
-          </ul>
-        </section>
-
-        <section aria-labelledby="join-title" className="bg-white rounded-2xl shadow p-6">
-          <h2 id="join-title" className="text-2xl font-outfit font-semibold text-[#1e1e1e] mb-4">
-            Who Can Join
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            This event is open to technology professionals, entrepreneurs, students, and anyone interested in the future of technology in Algeria. Whether you're a software developer, product manager, startup founder, or tech enthusiast, you'll find valuable content and networking opportunities.
-          </p>
-          <p className="text-gray-700 leading-relaxed">
-            We welcome participants from all experience levels — from recent graduates to seasoned industry veterans. The diverse mix of attendees creates an ideal environment for knowledge sharing and collaboration.
-          </p>
-        </section>
-
-        <section aria-labelledby="requirements-title" className="bg-white rounded-2xl shadow p-6">
-          <h2 id="requirements-title" className="text-2xl font-outfit font-semibold text-[#1e1e1e] mb-4">
-            Requirements
-          </h2>
-          <ul className="list-disc pl-5 text-gray-700 space-y-2">
-            <li>Valid government-issued ID for registration</li>
-            <li>Laptop or tablet for workshop participation (recommended)</li>
-            <li>Business cards for networking (optional but recommended)</li>
-            <li>Professional attire suggested</li>
-          </ul>
-        </section>
-
-        <section aria-labelledby="organized-title" className="bg-white rounded-2xl shadow p-6">
-          <h2 id="organized-title" className="text-2xl font-outfit font-semibold text-[#1e1e1e] mb-4">
-            Organized By
-          </h2>
-          <article className="flex items-start gap-4">
-            <div className="w-16 h-16 bg-[#f0f8ff] rounded-xl flex items-center justify-center">
-              <Image src={organizer.logo} alt="Organizer logo" width={40} height={40} className="object-contain" />
+          {event.description ? (
+            <div className="text-gray-700 leading-relaxed prose prose-slate max-w-none">
+              <SafeMarkdown
+                className=""
+                components={{
+                  p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                  strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+                  em: ({ children }) => <em className="italic">{children}</em>,
+                  ul: ({ children }) => <ul className="list-disc ml-4 mb-2">{children}</ul>,
+                  ol: ({ children }) => <ol className="list-decimal ml-4 mb-2">{children}</ol>,
+                  li: ({ children }) => <li className="mb-1">{children}</li>,
+                }}
+              >
+                {event.description}
+              </SafeMarkdown>
             </div>
-            <div className="flex-1">
-              <h3 className="font-outfit font-semibold text-[#1e1e1e]">{organizer.name}</h3>
-              <p className="text-sm text-gray-600 mb-4">{organizer.description}</p>
-              <Button variant="outline" className="px-3 py-2 h-9">View Organization</Button>
-            </div>
-          </article>
+          ) : (
+            <p className="text-gray-700 leading-relaxed">No description available for this event.</p>
+          )}
         </section>
+
+        {event.organization && (
+          <section aria-labelledby="organized-title" className="bg-white rounded-2xl shadow p-6">
+            <h2 id="organized-title" className="text-2xl font-outfit font-semibold text-[#1e1e1e] mb-4">
+              Organized By
+            </h2>
+            <article className="flex items-start gap-4">
+              <div className="w-16 h-16 bg-[#f0f8ff] rounded-xl flex items-center justify-center overflow-hidden">
+                {event.organization.logoUrl ? (
+                  <Image
+                    src={event.organization.logoUrl}
+                    alt="Organizer logo"
+                    width={40}
+                    height={40}
+                    className="object-contain"
+                  />
+                ) : (
+                  <div className="w-10 h-10 bg-[#1e4e79] rounded-full flex items-center justify-center text-white font-bold">
+                    {event.organization.name.charAt(0)}
+                  </div>
+                )}
+              </div>
+              <div className="flex-1">
+                <h3 className="font-outfit font-semibold text-[#1e1e1e]">{event.organization.name}</h3>
+                {event.organization.description && (
+                  <div className="text-sm text-gray-600 mb-4 prose prose-sm prose-slate max-w-none">
+                    <SafeMarkdown
+                      components={{
+                        p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                        strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+                        em: ({ children }) => <em className="italic">{children}</em>,
+                        ul: ({ children }) => <ul className="list-disc ml-4 mb-2">{children}</ul>,
+                        ol: ({ children }) => <ol className="list-decimal ml-4 mb-2">{children}</ol>,
+                        li: ({ children }) => <li className="mb-1">{children}</li>,
+                      }}
+                    >
+                      {event.organization.description}
+                    </SafeMarkdown>
+                  </div>
+                )}
+                {event.organization.websiteUrl && (
+                  <a
+                    href={event.organization.websiteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-[#1e4e79] text-sm hover:underline"
+                  >
+                    Visit Website <ExternalLink size={14} />
+                  </a>
+                )}
+              </div>
+            </article>
+          </section>
+        )}
       </main>
 
       {/* Sticky right sidebar */}
@@ -141,38 +205,80 @@ export default function SingleEventContent({ event }: Props) {
         <div className="sticky top-24 space-y-6">
           <Card className="rounded-2xl shadow-lg overflow-hidden">
             <CardContent className="p-6 text-center">
-              <div className="text-[#1e1e1e] font-outfit font-bold text-3xl tracking-tight">March</div>
-              <div className="text-[#1e4e79] font-outfit font-bold text-6xl leading-none">15</div>
-              <div className="text-gray-600 text-sm">2025</div>
+              <div className="text-[#1e1e1e] font-outfit font-bold text-3xl tracking-tight">{formattedMonth}</div>
+              <div className="text-[#1e4e79] font-outfit font-bold text-6xl leading-none">{formattedDay}</div>
+              <div className="text-gray-600 text-sm">{formattedYear}</div>
 
               <div className="mt-4 flex items-center justify-center gap-2 text-sm text-gray-600">
                 <Calendar size={16} />
-                <span>9:00 AM - 6:00 PM</span>
+                <span>{timeRange}</span>
               </div>
-              <div className="mt-2 flex items-center justify-center gap-2 text-sm text-gray-600">
-                <MapPin size={16} />
-                <span>Convention Center Algiers</span>
-              </div>
+              {event.location && (
+                <div className="mt-2 flex items-center justify-center gap-2 text-sm text-gray-600">
+                  <MapPin size={16} />
+                  <span>{event.location}</span>
+                </div>
+              )}
 
-              <div className="mt-4 text-sm text-gray-700 flex items-center justify-center gap-2">
-                <Users size={16} />
-                <span>250 attending</span>
-              </div>
+              {event.maxAttendees && (
+                <div className="mt-4 text-sm text-gray-700 flex items-center justify-center gap-2">
+                  <Users size={16} />
+                  <span>Max {event.maxAttendees} attendees</span>
+                </div>
+              )}
 
-              <Button className="mt-6 w-full h-12 bg-[#f7c948] text-black font-outfit font-semibold">Apply Now</Button>
+              {event.price > 0 && (
+                <div className="mt-4 text-lg font-bold text-[#1e4e79]">
+                  {event.price} DZD
+                </div>
+              )}
+
+              {event.applicationLink ? (
+                <a
+                  href={event.applicationLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block mt-6"
+                >
+                  <Button className="w-full h-12 bg-[#f7c948] text-black font-outfit font-semibold hover:bg-[#e5b83d]">
+                    Apply Now
+                  </Button>
+                </a>
+              ) : (
+                <Button
+                  className="mt-6 w-full h-12 bg-gray-300 text-gray-600 font-outfit font-semibold cursor-not-allowed"
+                  disabled
+                >
+                  Applications Closed
+                </Button>
+              )}
+
+              {event.registrationDeadline && (
+                <p className="mt-3 text-xs text-gray-500">
+                  Registration deadline:{" "}
+                  {new Date(event.registrationDeadline).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </p>
+              )}
             </CardContent>
           </Card>
         </div>
       </aside>
 
-      <section className="lg:col-span-3 mt-12 bg-white rounded-2xl shadow p-8">
-        <h3 className="font-outfit font-semibold text-[#1e4e79] text-xl mb-6">You Might Also Like</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {relatedEvents.map((ev) => (
-            <EventCard key={ev.id} event={ev} />
-          ))}
-        </div>
-      </section>
+      {/* Related Events */}
+      {relatedEvents.length > 0 && (
+        <section className="lg:col-span-3 mt-12 bg-white rounded-2xl shadow p-8">
+          <h3 className="font-outfit font-semibold text-[#1e4e79] text-xl mb-6">You Might Also Like</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {relatedEvents.map((ev) => (
+              <EventCard key={ev.id} event={ev} />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

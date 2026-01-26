@@ -1,6 +1,5 @@
 import Image from "next/image"
 import { LoginForm } from "./LoginOrgForm"
-import { Navbar } from "@components/Navbar/Navbar"
 
 export default function LoginPage() {
   return (
@@ -11,7 +10,7 @@ export default function LoginPage() {
         {/* Main Content Card */}
         <div className="max-w-6xl mx-auto bg-white/95 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 shadow-2xl">
           {/* Header Text */}
-          <div className="text-center mb-8 sm:mb-12">
+          <div className="text-center mb-8 sm:mb-12 font-outfit">
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1e3a5f] mb-3 sm:mb-4">
               Are You an Organizer?
             </h1>
