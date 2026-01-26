@@ -20,7 +20,6 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     
     // Validate query parameters - only include params that exist
-    // Zod will apply defaults for page and limit if they're missing
     const queryData: Record<string, string> = {};
     
     const searchParam = searchParams.get('search');
@@ -205,7 +204,6 @@ export async function POST(request: NextRequest) {
       });
     } catch (createError) {
       // If event creation fails, log and return error
-      // In a transaction-enabled setup, we would rollback here
       logger.error('Event creation failed', createError as Error);
       throw createError;
     }

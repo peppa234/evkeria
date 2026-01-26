@@ -164,7 +164,7 @@ export function EditProfileDialog({ isOpen, onClose }: Props) {
 
         if (uploadRes.ok) {
           const uploadData = await uploadRes.json();
-          // Handle both new format (data.data.url) and old format (data.url)
+          // Handle both new format (data.data.url) and old format (data.url) (i'll update the api to return the same format for both TODO!!)
           avatarUrl = uploadData.data?.url || uploadData.url;
         }
       }

@@ -19,7 +19,7 @@ export function FieldsSection({ initialFields = [] }: FieldsSectionProps) {
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Update fields when initialFields change (e.g., after refresh)
+
   useEffect(() => {
     setFields(initialFields);
   }, [initialFields]);

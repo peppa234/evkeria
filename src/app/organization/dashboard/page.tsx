@@ -111,7 +111,7 @@ export default function OrganizationDashboardPage() {
         }
       }
     } catch (err) {
-      // Error fetching events - fail silently
+      // Error fetching events
     } finally {
       setIsLoading(false);
     }

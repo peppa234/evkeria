@@ -72,7 +72,7 @@ export function EventCard({ event }: EventCardProps) {
         }
       }
     } catch (err) {
-      // Error toggling favorite - fail silently
+      // Error toggling favorite 
     } finally {
       setIsLoading(false);
     }

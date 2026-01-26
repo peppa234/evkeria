@@ -114,11 +114,11 @@ export async function POST(request: NextRequest) {
       );
     }
   } catch (error) {
-    // Ensure we always return JSON, even if logger fails
+    
     try {
       logger.error('Login error', error as Error);
     } catch (logError) {
-      // If logger fails, we can't do much - error already handled
+      
     }
     
     try {

@@ -103,7 +103,7 @@ export default function SingleEventContent({ event }: Props) {
         setRelatedEvents(filtered);
       }
     } catch (err) {
-      // Error fetching related events - fail silently
+      // Error fetching related events 
     }
   };
 

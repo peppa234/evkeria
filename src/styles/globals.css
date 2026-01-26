@@ -96,6 +96,10 @@
   .delay-300 {
     animation-delay: 300ms;
   }
+  
+  .animate-bounce-subtle {
+    animation: bounceSubtle 2s ease-in-out infinite;
+  }
 }
 
 @keyframes fadeIn {
@@ -148,6 +152,15 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes bounceSubtle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
   }
 }
 

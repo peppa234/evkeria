@@ -66,7 +66,7 @@ export default function EventsPage() {
       }
 
       const data = await res.json();
-      // Standardized format: { success: true, data: { events: [...] } }
+     
       if (data.success && data.data?.events) {
         setEvents(data.data.events);
       } else {
@@ -86,7 +86,6 @@ export default function EventsPage() {
       if (res.ok) {
         const data = await res.json();
         // Standardized format: { success: true, data: { savedEvents: [...] } }
-        // savedEvents can be either populated event objects or just IDs
         if (data.success && data.data?.savedEvents) {
           const savedEvents = data.data.savedEvents;
           // Handle both populated objects and IDs
@@ -107,7 +106,7 @@ export default function EventsPage() {
     }
   };
 
-  // Convert API event to format EventCard expects
+  // Convert API event to format EventCard 
   const mapApiEventToCardEvent = (apiEvent: ApiEvent) => {
     const eventId = String(apiEvent.id);
     return {

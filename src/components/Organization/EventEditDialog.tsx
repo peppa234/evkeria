@@ -213,7 +213,7 @@ export function EventEditDialog({
 
     try {
       // Convert date strings to ISO datetime strings for validation
-      // Date input gives YYYY-MM-DD, we need to convert to ISO datetime
+     
       const dateISO = formData.date 
         ? new Date(formData.date + 'T00:00:00.000Z').toISOString() 
         : "";
@@ -277,7 +277,7 @@ export function EventEditDialog({
         // Standardized format: { success: false, error: { message: string, details?: [...] } }
         let errorMsg = data.error?.message || "Failed to save event";
         
-        // If there are validation details, include them in the error message
+       
         if (data.error?.details && Array.isArray(data.error.details)) {
           interface ValidationIssue {
             path?: (string | number)[];

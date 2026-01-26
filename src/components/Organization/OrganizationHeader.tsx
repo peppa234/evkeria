@@ -35,7 +35,7 @@ export function OrganizationHeader({
             <div className="relative w-[85px] h-[85px] mb-2">
               <div className="w-[85px] h-[85px] rounded-full bg-white shadow-[-2px_4px_4px_-3px_rgba(0,0,0,0.06)] overflow-hidden flex items-center justify-center">
                 <Image
-                  src={logoUrl || "/logo_white.svg"}
+                  src={logoUrl || "/logo_white.svg"} /*just for fallback*/
                   alt={`${name} logo`}
                   width={85}
                   height={85}

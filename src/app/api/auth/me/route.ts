@@ -8,7 +8,7 @@ import { corsHeaders } from '@lib/middleware/cors';
 
 export async function GET(request: Request) {
   try {
-    // Get all tokens (both user and org if both are logged in)
+    // Get all tokens 
     const tokens = await getAllTokens();
 
     if (!tokens.user && !tokens.organization) {

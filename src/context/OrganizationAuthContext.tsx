@@ -37,6 +37,7 @@ export function OrganizationAuthProvider({ children }: { children: ReactNode }) 
   useEffect(() => {
     checkAuth();
   }, []);
+  //"organization" is the type of the organization session, "both" is when both user and organization are logged in
 
   const checkAuth = async () => {
     try {
@@ -110,9 +111,23 @@ export function OrganizationAuthProvider({ children }: { children: ReactNode }) 
 
       const data = await res.json();
 
-      // Standardized format: { success: false, error: { message: string } }
+      // Standardized format: { success: false, error: { message: string, details?: unknown } }
       if (!res.ok || !data.success) {
-        const errorMsg = data.error?.message || "Signup failed";
+        let errorMsg = data.error?.message || "Signup failed";
+        
+        // Extract validation errors from details if available
+        if (data.error?.code === 'VALIDATION_ERROR' && Array.isArray(data.error.details)) {
+          const validationErrors = data.error.details
+            .map((issue: { path: string[]; message: string }) => {
+              const field = issue.path.join('.');
+              return `${field ? field.charAt(0).toUpperCase() + field.slice(1) + ': ' : ''}${issue.message}`;
+            })
+            .join(', ');
+          if (validationErrors) {
+            errorMsg = validationErrors;
+          }
+        }
+        
         return { success: false, error: errorMsg };
       }
 

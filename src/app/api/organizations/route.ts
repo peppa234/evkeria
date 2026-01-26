@@ -5,7 +5,7 @@ import { handleApiError, createSuccessResponse } from '@lib/errors/api-error';
 import { logger } from '@lib/errors/logger';
 import { handleCors, corsHeaders } from '@lib/middleware/cors';
 
-// GET - List all organizations
+// GET - List all organizations (currently not used in frontend - we can used it later when we upgrade the website )
 export async function GET(request: NextRequest) {
   // Handle CORS
   const corsResponse = handleCors(request);
